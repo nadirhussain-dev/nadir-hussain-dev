@@ -41,7 +41,7 @@ export function TraceRail() {
           href={`#${span.id}`}
           aria-current={isActive ? 'true' : undefined}
           onClick={() => setMobileOpen(false)}
-          className="group block rounded-xs py-1.5"
+          className="group block rounded-xs py-2.5 xl:py-1.5"
         >
           <span
             className={cn(
@@ -113,7 +113,7 @@ export function TraceRail() {
           onClick={() => setMobileOpen((open) => !open)}
           aria-expanded={mobileOpen}
           aria-controls="trace-mobile-list"
-          className="flex w-full items-center justify-between gap-4 px-(--spacing-gutter) py-3 text-left"
+          className="flex h-[calc(var(--spacing-mobile-bar)-1px)] w-full items-center justify-between gap-4 px-(--spacing-gutter) text-left"
         >
           <span className="flex min-w-0 items-center gap-2">
             <span

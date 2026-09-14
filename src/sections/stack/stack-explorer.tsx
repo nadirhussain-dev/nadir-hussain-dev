@@ -50,7 +50,7 @@ export function StackExplorer({ showDrafts }: { showDrafts: boolean }) {
                       onClick={() => setSelectedId(technology.id)}
                       aria-pressed={active}
                       className={cn(
-                        'rounded-sm border px-3 py-1.5 font-mono text-meta transition-colors duration-(--duration-quick)',
+                        'min-h-9 rounded-sm border px-3 py-1.5 font-mono text-meta transition-colors duration-(--duration-quick)',
                         active
                           ? 'border-signal bg-signal/10 text-signal'
                           : 'border-rule bg-ink-850 text-paper-300 hover:border-rule-strong',
