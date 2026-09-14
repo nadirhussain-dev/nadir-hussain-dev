@@ -12,7 +12,7 @@ import { join } from 'node:path';
  */
 const DIRECTORY = 'portrait';
 const BASENAME = 'nadir-hussain';
-const EXTENSIONS = ['avif', 'webp', 'jpg', 'jpeg', 'png'] as const;
+const EXTENSIONS = ['webp', 'avif', 'jpg', 'jpeg', 'png'] as const;
 
 export interface PortraitStatus {
   available: boolean;
