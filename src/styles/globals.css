@@ -1,42 +1,138 @@
 @import 'tailwindcss';
+@import './tokens.css';
 
-/**
- * Design tokens land here in the design-system commit.
- * This file currently establishes only the ground: warm neutrals rather than
- * the cold near-black that most engineering portfolios default to.
- */
-@theme {
-  --color-ink-900: #121010;
-  --color-ink-800: #1a1716;
-  --color-ink-700: #241f1e;
-  --color-paper-100: #f4f1ec;
-
-  --color-signal: #e8a33d;
-  --color-flow: #4fb3a8;
-}
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
 
 :root {
   color-scheme: dark;
+  /* Set once here so section reveals and the trace rail share one rhythm. */
+  --reveal-distance: 1.25rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* The rail is sticky; anchored jumps must not land under it. */
+  scroll-padding-block-start: 6rem;
 }
 
 body {
+  margin: 0;
   background-color: var(--color-ink-900);
   color: var(--color-paper-100);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Kills the horizontal scrollbar that offset decorative elements
+     would otherwise introduce at narrow widths. */
+  overflow-x: clip;
 }
 
+::selection {
+  background-color: var(--color-signal);
+  color: var(--color-ink-950);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus — visible, on-brand, and never removed
+   --------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Only suppress the ring for genuine pointer interaction. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Grain
+   Very low-opacity fractal noise. Two jobs: it kills the banding that large
+   flat dark fields produce on 8-bit displays, and it gives the surface a
+   photographic weight that flat CSS colour does not have. Fixed position and
+   a single composited layer, so it costs nothing to scroll.
+   --------------------------------------------------------------------------- */
+
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  will-change: transform;
+}
+
+/* ---------------------------------------------------------------------------
+   Rule system
+   Hairlines that read as an engineering drawing sheet rather than as card
+   borders. The corner ticks are the signature: they imply a measured frame
+   without enclosing the content in a box.
+   --------------------------------------------------------------------------- */
+
+.rule-frame {
+  position: relative;
+}
+
+.rule-frame::before,
+.rule-frame::after {
+  content: '';
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  pointer-events: none;
+  border-color: var(--color-rule-strong);
+  border-style: solid;
+}
+
+.rule-frame::before {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.rule-frame::after {
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  border-width: 0 1px 1px 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   Animations resolve to their END state rather than being stripped, so no
+   content is ever left invisible or mid-transition.
+   --------------------------------------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    transition-delay: 0ms !important;
+  }
+
+  .grain::after {
+    display: none;
   }
 }

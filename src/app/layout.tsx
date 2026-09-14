@@ -3,16 +3,26 @@ import { Instrument_Sans, JetBrains_Mono } from 'next/font/google';
 import { site } from '@/data/site';
 import '@/styles/globals.css';
 
-const sans = Instrument_Sans({
+/**
+ * Instrument Sans over Inter: it carries slightly more character in the
+ * terminals and a tighter aperture, which keeps large display sizes from
+ * reading as generic. JetBrains Mono is used as a design element throughout —
+ * metadata, labels, span ids — not only for code.
+ */
+const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-instrument-sans',
   display: 'swap',
+  // Self-hosted and subset by next/font, so no render-blocking third-party
+  // request and no layout shift once the fallback metrics are matched.
+  adjustFontFallback: true,
 });
 
-const mono = JetBrains_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-jetbrains-mono',
   display: 'swap',
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -29,8 +39,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
-      <body className="font-sans">{children}</body>
+    <html lang="en" className={`${instrumentSans.variable} ${jetbrainsMono.variable}`}>
+      <body className="grain">{children}</body>
     </html>
   );
 }

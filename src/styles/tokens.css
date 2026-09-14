@@ -1,0 +1,98 @@
+/**
+ * Design tokens.
+ *
+ * Two rules govern this palette and they are why the site does not look like
+ * every other engineering portfolio:
+ *
+ * 1. The neutrals are WARM. The default in this space is a cold near-black
+ *    (#0A0A0A) with blue-grey mids. Shifting the whole ramp warm reads as
+ *    considered rather than defaulted, and it makes the amber accent sit in
+ *    the palette instead of on top of it.
+ *
+ * 2. Each accent has exactly ONE semantic job. `signal` means live/active.
+ *    `flow` means data in motion. They are never decorative, never swapped,
+ *    and never gradient-blended together. That constraint is doing more work
+ *    for the visual identity than any effect could.
+ */
+@theme {
+  /* --- Warm graphite ramp --------------------------------------------- */
+  --color-ink-950: #0d0b0b;
+  --color-ink-900: #121010;
+  --color-ink-850: #171413;
+  --color-ink-800: #1e1a19;
+  --color-ink-700: #2a2523;
+  --color-ink-600: #3a3331;
+  --color-ink-500: #544b48;
+
+  --color-paper-100: #f4f1ec;
+  --color-paper-200: #e3ddd4;
+  --color-paper-300: #c6bdb2;
+  --color-paper-400: #a89f97;
+  --color-paper-500: #7d746e;
+
+  /* --- Accents: one job each ------------------------------------------ */
+  /* Live / active / "you are here". Never decoration. */
+  --color-signal: #e8a33d;
+  --color-signal-dim: #8a5f20;
+  /* Data in motion: trace lines, request flow, edges. Never text. */
+  --color-flow: #4fb3a8;
+  --color-flow-dim: #2a5f5a;
+
+  /* --- Status: reserved for the simulator, where it encodes state ------ */
+  --color-status-ok: #4fb3a8;
+  --color-status-warn: #e8a33d;
+  --color-status-fail: #d4553f;
+
+  /* --- Structure ------------------------------------------------------- */
+  /* Hairlines that read as a technical drawing sheet, not as borders. */
+  --color-rule: oklch(from var(--color-paper-100) l c h / 0.1);
+  --color-rule-strong: oklch(from var(--color-paper-100) l c h / 0.2);
+
+  /* --- Type ------------------------------------------------------------ */
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, 'SF Mono', monospace;
+
+  /* Fluid scale. Clamp bounds are set so nothing needs a breakpoint to
+     stay readable between 320px and 1920px. */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.45;
+  --text-micro--letter-spacing: 0.08em;
+
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.5;
+  --text-meta--letter-spacing: 0.04em;
+
+  --text-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  --text-body--line-height: 1.65;
+
+  --text-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
+  --text-lead--line-height: 1.55;
+
+  --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+
+  --text-h2: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+
+  --text-h1: clamp(2.5rem, 1.6rem + 4.2vw, 5.5rem);
+  --text-h1--line-height: 0.98;
+  --text-h1--letter-spacing: -0.035em;
+
+  /* --- Motion ---------------------------------------------------------- */
+  /* One signature curve, used everywhere, so motion feels like one system.
+     Weighted toward a fast start and a long settle: things arrive with
+     intent rather than floating in. */
+  --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --duration-instant: 120ms;
+  --duration-quick: 220ms;
+  --duration-considered: 420ms;
+  --duration-deliberate: 700ms;
+
+  /* --- Layout ---------------------------------------------------------- */
+  --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
+  --spacing-rail: 13rem;
+}
