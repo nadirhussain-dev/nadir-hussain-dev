@@ -3,6 +3,7 @@ import { site } from '@/data/site';
 import { identity } from '@/data/identity';
 import { MonoLabel } from '@/components/ui/mono-label';
 import { Hairline } from '@/components/ui/hairline';
+import { Portrait } from '@/components/ui/portrait';
 import { LoadTrace } from './load-trace';
 
 /**
@@ -37,6 +38,20 @@ export function IdentitySection({ span }: { span: Span }) {
 
           <p className="mt-4 text-h3 font-medium text-paper-300">{site.role}</p>
 
+          {/* Visible, not just in markup. Structured data declares the aliases,
+              but a crawler weights a name that also appears in body copy — and
+              a reader who searched for a variant needs to see they are in the
+              right place. */}
+          <p className="mt-3 text-meta text-paper-500">
+            Also known as{' '}
+            {site.alternateNames.value.slice(0, 2).map((alias, index) => (
+              <span key={alias}>
+                {index > 0 && ' · '}
+                <span className="text-paper-400">{alias}</span>
+              </span>
+            ))}
+          </p>
+
           <Hairline className="my-8 max-w-md" />
 
           <p className="max-w-xl text-lead text-pretty text-paper-200">
@@ -47,7 +62,8 @@ export function IdentitySection({ span }: { span: Span }) {
           </p>
         </div>
 
-        <div className="lg:justify-self-end">
+        <div className="flex flex-col gap-6 lg:justify-self-end">
+          <Portrait className="w-full max-w-[16rem] sm:max-w-[18rem]" />
           <LoadTrace />
         </div>
       </div>
