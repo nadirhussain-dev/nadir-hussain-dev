@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Instrument_Sans, JetBrains_Mono } from 'next/font/google';
-import { site } from '@/data/site';
+import { buildPersonJsonLd, rootMetadata } from '@/lib/seo/metadata';
 import { SkipLink } from '@/components/ui/skip-link';
 import { TraceRail } from '@/components/trace/trace-rail';
 import '@/styles/globals.css';
@@ -25,10 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
   adjustFontFallback: true,
 });
 
-export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
-  description: site.focus,
-};
+export const metadata: Metadata = rootMetadata;
 
 export const viewport: Viewport = {
   themeColor: '#121010',
@@ -41,6 +38,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${instrumentSans.variable} ${jetbrainsMono.variable}`}>
       <body className="grain">
+        {/* Structured data is read by machines that cannot tell a placeholder
+            from a fact, so it emits only verified claims. */}
+        <script
+          type="application/ld+json"
+          // Serialised from typed content by JSON.stringify, never from user
+          // input, so there is no injection surface here.
+          dangerouslySetInnerHTML={{ __html: buildPersonJsonLd() }}
+        />
         <SkipLink />
         <TraceRail />
         {/* Clears the fixed mobile bar. The desktop rail is beside the content,
