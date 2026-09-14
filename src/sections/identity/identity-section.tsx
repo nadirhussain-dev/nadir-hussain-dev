@@ -38,20 +38,6 @@ export function IdentitySection({ span }: { span: Span }) {
 
           <p className="mt-4 text-h3 font-medium text-paper-300">{site.role}</p>
 
-          {/* Visible, not just in markup. Structured data declares the aliases,
-              but a crawler weights a name that also appears in body copy — and
-              a reader who searched for a variant needs to see they are in the
-              right place. */}
-          <p className="mt-3 text-meta text-paper-500">
-            Also known as{' '}
-            {site.alternateNames.value.slice(0, 2).map((alias, index) => (
-              <span key={alias}>
-                {index > 0 && ' · '}
-                <span className="text-paper-400">{alias}</span>
-              </span>
-            ))}
-          </p>
-
           <Hairline className="my-8 max-w-md" />
 
           <p className="max-w-xl text-lead text-pretty text-paper-200">
