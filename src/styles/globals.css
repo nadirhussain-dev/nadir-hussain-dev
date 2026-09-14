@@ -136,3 +136,66 @@ body {
     display: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Portrait
+   A photo dropped into this palette unchanged would read as a foreign object.
+   Grading it toward the warm ramp makes it part of the page. The colour
+   resolves on hover or keyboard focus — the one moment of delight on the site,
+   and still tied to the progressive-resolution idea everything else uses.
+   --------------------------------------------------------------------------- */
+
+.portrait-plate img {
+  filter: grayscale(1) contrast(1.08) brightness(0.92);
+  transition:
+    filter var(--duration-deliberate) var(--ease-signature),
+    transform var(--duration-deliberate) var(--ease-signature);
+  will-change: filter;
+}
+
+/* Duotone: a warm wash pulled from the accent, applied to luminance only. */
+.portrait-plate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(165deg, var(--color-signal) 0%, var(--color-flow) 100%);
+  mix-blend-mode: color;
+  opacity: 0.42;
+  transition: opacity var(--duration-deliberate) var(--ease-signature);
+}
+
+/* Deepens the base so the plate sits in the page rather than glowing off it. */
+.portrait-plate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--color-ink-900) 0%, transparent 45%);
+  opacity: 0.55;
+}
+
+.portrait:hover .portrait-plate img,
+.portrait:focus-within .portrait-plate img {
+  filter: grayscale(0) contrast(1) brightness(1);
+  transform: scale(1.015);
+}
+
+.portrait:hover .portrait-plate::after,
+.portrait:focus-within .portrait-plate::after {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Arrive resolved rather than transitioning; no motion, no lost content. */
+  .portrait-plate img {
+    filter: grayscale(0) contrast(1) brightness(1);
+    transform: none;
+  }
+
+  .portrait-plate::after {
+    opacity: 0;
+  }
+}
