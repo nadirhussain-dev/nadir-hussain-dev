@@ -5,6 +5,7 @@ import { IdentitySection } from '@/sections/identity/identity-section';
 import { SystemsSection } from '@/sections/systems/systems-section';
 import { PlaygroundSection } from '@/sections/playground/playground-section';
 import { WorkSection } from '@/sections/work/work-section';
+import { TimelineSection } from '@/sections/timeline/timeline-section';
 
 /**
  * The trace.
@@ -14,7 +15,6 @@ import { WorkSection } from '@/sections/work/work-section';
  * section, one commit at a time.
  */
 const PLACEHOLDER_NOTES: Record<string, string> = {
-  timeline: 'Trajectory. Awaiting verified experience detail from Nadir.',
   stack: 'Stack organised by engineering layer.',
   contact: 'Contact and resume.',
 };
@@ -34,6 +34,9 @@ export default function Home() {
         }
         if (span.id === 'work') {
           return <WorkSection key={span.id} span={span} />;
+        }
+        if (span.id === 'timeline') {
+          return <TimelineSection key={span.id} span={span} />;
         }
         return (
           <Section key={span.id} span={span}>
