@@ -140,16 +140,16 @@ body {
 /* ---------------------------------------------------------------------------
    Portrait
 
-   Shown essentially as shot. Two earlier versions graded it heavily — first an
-   amber-to-teal duotone in `color` blend mode, then a lighter warm wash — and
-   both made the subject look ill. The lesson is the honest one: a good
+   Shown as shot. Two earlier versions graded the photograph — first an
+   amber-to-teal duotone in `color` blend mode, which drained skin to olive,
+   then a lighter warm wash that was still wrong. The useful lesson: a good
    photograph does not need a filter to belong on a page, and a treatment that
    has to be tuned repeatedly is a treatment that is not working.
 
-   What remains is only what serves the layout: a soft fade at the very bottom
-   so the plate settles into the page instead of ending on a hard edge, and a
-   restrained corner vignette so the venue behind the subject recedes. No
-   colour manipulation at all.
+   What makes it sit in the page is composition, not colour. The crop does most
+   of the work; these rules only finish the edges — a vignette so the venue
+   behind the subject recedes, and a fade into the caption strip so the plate
+   does not end on a hard line. No colour manipulation.
    --------------------------------------------------------------------------- */
 
 .portrait-plate img {
@@ -163,17 +163,20 @@ body {
   z-index: 2;
   pointer-events: none;
   background:
+    /* Elliptical and centred slightly high, so it falls on the background
+       rather than on the face. */
     radial-gradient(
-      130% 95% at 50% 40%,
-      transparent 58%,
-      color-mix(in oklab, var(--color-ink-950) 55%, transparent) 100%
+      118% 78% at 50% 34%,
+      transparent 45%,
+      color-mix(in oklab, var(--color-ink-950) 32%, transparent) 78%,
+      color-mix(in oklab, var(--color-ink-950) 72%, transparent) 100%
     ),
-    linear-gradient(to top, var(--color-ink-900) 0%, transparent 22%);
+    linear-gradient(to top, var(--color-ink-900) 0%, transparent 18%);
 }
 
 .portrait:hover .portrait-plate img,
 .portrait:focus-within .portrait-plate img {
-  transform: scale(1.02);
+  transform: scale(1.025);
 }
 
 @media (prefers-reduced-motion: reduce) {
