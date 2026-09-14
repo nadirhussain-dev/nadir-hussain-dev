@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+/**
+ * Design tokens land here in the design-system commit.
+ * This file currently establishes only the ground: warm neutrals rather than
+ * the cold near-black that most engineering portfolios default to.
+ */
+@theme {
+  --color-ink-900: #121010;
+  --color-ink-800: #1a1716;
+  --color-ink-700: #241f1e;
+  --color-paper-100: #f4f1ec;
+
+  --color-signal: #e8a33d;
+  --color-flow: #4fb3a8;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-ink-900);
+  color: var(--color-paper-100);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
