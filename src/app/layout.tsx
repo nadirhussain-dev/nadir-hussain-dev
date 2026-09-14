@@ -48,9 +48,9 @@ export default function RootLayout({
         />
         <SkipLink />
         <TraceRail />
-        {/* Clears the fixed mobile bar. The desktop rail is beside the content,
-            not above it, so the offset is mobile-only. */}
-        <main className="pt-12 xl:pt-0">{children}</main>
+        {/* Clears the fixed mobile bar. The desktop rail sits beside the
+            content rather than above it, so the offset is mobile-only. */}
+        <main className="pt-(--spacing-mobile-bar) xl:pt-0">{children}</main>
       </body>
     </html>
   );

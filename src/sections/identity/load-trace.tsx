@@ -44,7 +44,7 @@ export function LoadTrace() {
                 aria-expanded={isOpen}
                 onClick={() => setOpenPhase(isOpen ? null : phase.id)}
                 onMouseEnter={() => setOpenPhase(phase.id)}
-                className="group grid w-full grid-cols-[4.5rem_1fr_4rem] items-center gap-3 rounded-xs py-1 text-left sm:grid-cols-[5.5rem_1fr_4.5rem]"
+                className="group grid w-full grid-cols-[3.5rem_1fr_3.25rem] items-center gap-2.5 rounded-xs py-1 text-left sm:grid-cols-[5.5rem_1fr_4.5rem] sm:gap-3"
               >
                 <MonoLabel
                   tone={isOpen ? 'signal' : 'muted'}
@@ -85,7 +85,7 @@ export function LoadTrace() {
       {/* Reserved height so opening an explanation never shifts the layout. */}
       <p
         aria-live="polite"
-        className="mt-5 min-h-16 text-meta text-pretty text-paper-400 sm:min-h-12"
+        className="mt-5 min-h-20 text-meta text-pretty text-paper-400 sm:min-h-12"
       >
         {active?.explain ?? 'Hover or select a phase to see what it covers.'}
       </p>

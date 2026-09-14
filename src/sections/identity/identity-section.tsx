@@ -18,9 +18,9 @@ export function IdentitySection({ span }: { span: Span }) {
     <section
       id={span.id}
       aria-labelledby={`${span.id}-heading`}
-      className="flex min-h-dvh scroll-mt-24 flex-col justify-center px-(--spacing-gutter) py-24"
+      className="flex min-h-[calc(100dvh-var(--spacing-mobile-bar))] scroll-mt-24 flex-col justify-center px-(--spacing-gutter) py-16 sm:py-24 xl:min-h-dvh"
     >
-      <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16">
+      <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
         <div>
           <div className="mb-6 flex items-center gap-4">
             <MonoLabel tone="flow">{span.label}</MonoLabel>

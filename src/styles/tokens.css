@@ -95,4 +95,7 @@
   /* --- Layout ---------------------------------------------------------- */
   --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
   --spacing-rail: 13rem;
+  /* The fixed mobile trace bar. Both the bar and the padding that clears it
+     read this, so they cannot drift apart. */
+  --spacing-mobile-bar: 3rem;
 }
