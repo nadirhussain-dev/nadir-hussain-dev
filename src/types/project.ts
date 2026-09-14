@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { provenanceSchema } from './content';
+import { provenanceSchema } from './content-schema';
 
 /**
  * A project case study.

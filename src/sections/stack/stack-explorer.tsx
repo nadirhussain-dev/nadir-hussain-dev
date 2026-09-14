@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { STACK, ALL_TECHNOLOGIES } from '@/data/stack';
-import { projects } from '@/data/projects';
-import { isPublishable } from '@/types/project';
 import { MonoLabel } from '@/components/ui/mono-label';
 import { cn } from '@/lib/utils';
 
@@ -15,19 +13,25 @@ import { cn } from '@/lib/utils';
  * maintained by hand, so the two can never disagree — and a technology whose
  * note is still a draft says so plainly instead of asserting expertise.
  */
-export function StackExplorer({ showDrafts }: { showDrafts: boolean }) {
+/** technology name (lowercased) -> published project names that use it. */
+export type TechnologyUsage = Readonly<Record<string, readonly string[]>>;
+
+export function StackExplorer({
+  showDrafts,
+  usage,
+}: {
+  showDrafts: boolean;
+  usage: TechnologyUsage;
+}) {
   const [selectedId, setSelectedId] = useState(ALL_TECHNOLOGIES[0]?.id ?? '');
 
   const selected =
     ALL_TECHNOLOGIES.find((technology) => technology.id === selectedId) ??
     ALL_TECHNOLOGIES[0];
 
-  // Derived, never hand-maintained: only published projects can claim a stack.
-  const usedIn = projects
-    .filter(isPublishable)
-    .filter((project) =>
-      project.stack.some((item) => item.toLowerCase() === selected?.name.toLowerCase()),
-    );
+  // Derived on the server, never hand-maintained: only published projects can
+  // claim a technology.
+  const usedIn = usage[selected?.name.toLowerCase() ?? ''] ?? [];
 
   const isDraft = selected?.provenance !== 'verified';
 
@@ -96,13 +100,13 @@ export function StackExplorer({ showDrafts }: { showDrafts: boolean }) {
             </p>
           ) : (
             <ul className="flex flex-wrap gap-1.5">
-              {usedIn.map((project) => (
-                <li key={project.slug}>
+              {usedIn.map((projectName) => (
+                <li key={projectName}>
                   <a
                     href="#work"
                     className="rounded-xs border border-rule px-2 py-1 font-mono text-micro text-paper-300 transition-colors duration-(--duration-quick) hover:border-rule-strong hover:text-paper-100"
                   >
-                    {project.name}
+                    {projectName}
                   </a>
                 </li>
               ))}

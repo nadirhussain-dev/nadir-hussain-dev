@@ -199,3 +199,38 @@ body {
     opacity: 0;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Scroll reveals
+   Implemented as CSS scroll-driven animations rather than with a motion
+   library. A library would have cost roughly 40KB gzipped and a client
+   component around every revealed element; this costs nothing and runs off the
+   main thread.
+
+   Where `animation-timeline` is unsupported, the @supports guard never applies
+   and content is simply visible — the correct degradation, since the failure
+   mode of a JS reveal is invisible content.
+   --------------------------------------------------------------------------- */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      /* Resolved by the time the element is a third of the way up, so reading
+         is never gated on the animation finishing. */
+      animation-range: entry 0% cover 22%;
+    }
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
