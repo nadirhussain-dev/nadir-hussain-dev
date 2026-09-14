@@ -21,12 +21,17 @@ export const site = {
     'Confirm the production domain. Repo name implies nadir-hussain.dev, but this has not been verified.',
   ) satisfies Claim<string>,
 
-  email: verified('nhussain@plyaz.co.uk') satisfies Claim<string>,
-
-  github: needsConfirmation(
-    'https://github.com/nadirhussain-dev',
-    'Two GitHub accounts are visible (nadirhussain-dev owns this repo, nadirhussain786 is the authenticated user). Confirm which to link publicly.',
+  /**
+   * Must be a personal address. Nadir's employer address is explicitly out of
+   * scope for this site and must never be committed here.
+   */
+  email: needsConfirmation(
+    '',
+    'Personal contact email needed. Do not use a work address. The contact section omits the link until this is supplied.',
   ) satisfies Claim<string>,
+
+  /** Confirmed by Nadir: link the nadirhussain786 account publicly. */
+  github: verified('https://github.com/nadirhussain786') satisfies Claim<string>,
 
   linkedin: needsConfirmation(
     '',
