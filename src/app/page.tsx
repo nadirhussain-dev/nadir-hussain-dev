@@ -2,6 +2,7 @@ import { SPANS } from '@/data/spans';
 import { Section } from '@/components/ui/section';
 import { SectionPlaceholder } from '@/sections/section-placeholder';
 import { IdentitySection } from '@/sections/identity/identity-section';
+import { SystemsSection } from '@/sections/systems/systems-section';
 
 /**
  * The trace.
@@ -11,8 +12,6 @@ import { IdentitySection } from '@/sections/identity/identity-section';
  * section, one commit at a time.
  */
 const PLACEHOLDER_NOTES: Record<string, string> = {
-  systems:
-    'Interactive architecture: why each component exists, its trade-offs and its failure modes.',
   work: 'Case studies. Awaiting verified project detail from Nadir.',
   timeline: 'Trajectory. Awaiting verified experience detail from Nadir.',
   stack: 'Stack organised by engineering layer.',
@@ -26,6 +25,9 @@ export default function Home() {
       {SPANS.map((span) => {
         if (span.id === 'identity') {
           return <IdentitySection key={span.id} span={span} />;
+        }
+        if (span.id === 'systems') {
+          return <SystemsSection key={span.id} span={span} />;
         }
         return (
           <Section key={span.id} span={span}>
