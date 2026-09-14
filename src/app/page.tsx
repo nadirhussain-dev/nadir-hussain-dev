@@ -1,6 +1,7 @@
 import { SPANS } from '@/data/spans';
 import { Section } from '@/components/ui/section';
 import { SectionPlaceholder } from '@/sections/section-placeholder';
+import { IdentitySection } from '@/sections/identity/identity-section';
 
 /**
  * The trace.
@@ -10,7 +11,6 @@ import { SectionPlaceholder } from '@/sections/section-placeholder';
  * section, one commit at a time.
  */
 const PLACEHOLDER_NOTES: Record<string, string> = {
-  identity: 'Hero experience.',
   systems:
     'Interactive architecture: why each component exists, its trade-offs and its failure modes.',
   work: 'Case studies. Awaiting verified project detail from Nadir.',
@@ -23,11 +23,16 @@ const PLACEHOLDER_NOTES: Record<string, string> = {
 export default function Home() {
   return (
     <div className="xl:pl-(--spacing-rail)">
-      {SPANS.map((span) => (
-        <Section key={span.id} span={span}>
-          <SectionPlaceholder note={PLACEHOLDER_NOTES[span.id] ?? ''} />
-        </Section>
-      ))}
+      {SPANS.map((span) => {
+        if (span.id === 'identity') {
+          return <IdentitySection key={span.id} span={span} />;
+        }
+        return (
+          <Section key={span.id} span={span}>
+            <SectionPlaceholder note={PLACEHOLDER_NOTES[span.id] ?? ''} />
+          </Section>
+        );
+      })}
     </div>
   );
 }
