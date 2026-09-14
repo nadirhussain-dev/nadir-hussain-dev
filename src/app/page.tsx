@@ -6,6 +6,7 @@ import { SystemsSection } from '@/sections/systems/systems-section';
 import { PlaygroundSection } from '@/sections/playground/playground-section';
 import { WorkSection } from '@/sections/work/work-section';
 import { TimelineSection } from '@/sections/timeline/timeline-section';
+import { StackSection } from '@/sections/stack/stack-section';
 
 /**
  * The trace.
@@ -15,7 +16,6 @@ import { TimelineSection } from '@/sections/timeline/timeline-section';
  * section, one commit at a time.
  */
 const PLACEHOLDER_NOTES: Record<string, string> = {
-  stack: 'Stack organised by engineering layer.',
   contact: 'Contact and resume.',
 };
 
@@ -37,6 +37,9 @@ export default function Home() {
         }
         if (span.id === 'timeline') {
           return <TimelineSection key={span.id} span={span} />;
+        }
+        if (span.id === 'stack') {
+          return <StackSection key={span.id} span={span} />;
         }
         return (
           <Section key={span.id} span={span}>
