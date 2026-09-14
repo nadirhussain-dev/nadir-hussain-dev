@@ -4,6 +4,7 @@ import { SectionPlaceholder } from '@/sections/section-placeholder';
 import { IdentitySection } from '@/sections/identity/identity-section';
 import { SystemsSection } from '@/sections/systems/systems-section';
 import { PlaygroundSection } from '@/sections/playground/playground-section';
+import { WorkSection } from '@/sections/work/work-section';
 
 /**
  * The trace.
@@ -13,7 +14,6 @@ import { PlaygroundSection } from '@/sections/playground/playground-section';
  * section, one commit at a time.
  */
 const PLACEHOLDER_NOTES: Record<string, string> = {
-  work: 'Case studies. Awaiting verified project detail from Nadir.',
   timeline: 'Trajectory. Awaiting verified experience detail from Nadir.',
   stack: 'Stack organised by engineering layer.',
   contact: 'Contact and resume.',
@@ -31,6 +31,9 @@ export default function Home() {
         }
         if (span.id === 'playground') {
           return <PlaygroundSection key={span.id} span={span} />;
+        }
+        if (span.id === 'work') {
+          return <WorkSection key={span.id} span={span} />;
         }
         return (
           <Section key={span.id} span={span}>
