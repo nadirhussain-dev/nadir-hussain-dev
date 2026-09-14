@@ -8,6 +8,11 @@
  *
  * Usage:
  *   node scripts/prepare-portrait.mts <source> [--top N] [--left N] [--width N]
+ *                                     [--blur N] [--focusY N] [--focusHold N]
+ *
+ * The committed portrait was produced with:
+ *   node scripts/prepare-portrait.mts DSC_3153.JPG \
+ *     --left 1113 --top 1944 --width 1700
  */
 import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
@@ -23,6 +28,13 @@ const ASPECT_H = 5;
 /** Widest the portrait is ever displayed (18rem at 2x DPR), plus headroom. */
 const TARGET_WIDTH = 1200;
 
+/** Depth-of-field controls. Overridable per photo from the command line. */
+const DEFAULT_BLUR = 26;
+/** Vertical centre of the in-focus region, as a percentage of frame height. */
+const DEFAULT_FOCUS_Y = 44;
+/** How far the mask stays fully opaque before it begins to fall off. */
+const DEFAULT_FOCUS_HOLD = 26;
+
 const args = process.argv.slice(2);
 const source = args[0];
 
@@ -37,6 +49,10 @@ const flag = (name: string): number | undefined => {
   const value = Number(args[index + 1]);
   return Number.isFinite(value) ? value : undefined;
 };
+
+const BLUR = flag('blur') ?? DEFAULT_BLUR;
+const FOCUS_Y = flag('focusY') ?? DEFAULT_FOCUS_Y;
+const FOCUS_HOLD = flag('focusHold') ?? DEFAULT_FOCUS_HOLD;
 
 const main = async (): Promise<void> => {
   const image = sharp(source, { failOn: 'none' }).rotate();
@@ -88,19 +104,61 @@ const main = async (): Promise<void> => {
     .sharpen({ sigma: 0.6 });
 
   /**
+   * Synthetic depth of field.
+   *
+   * The photograph was shot at an event, so the background is as sharp as the
+   * subject and competes with the face. A portrait lens would have thrown it
+   * out of focus; this reproduces that falloff rather than trying to fix a
+   * composition problem with colour, which is what the earlier grading
+   * attempts got wrong.
+   *
+   * A blurred copy is laid down first, then the sharp original is composited
+   * over it through a soft elliptical alpha mask centred on the subject. The
+   * mask edge is gradual, so the transition reads as focus falloff rather than
+   * as a cutout — there is no segmentation here and a hard edge would look
+   * exactly like the fake it is.
+   */
+  const flat = await base.clone().png().toBuffer();
+  const { width: fw, height: fh } = await sharp(flat).metadata();
+  const w = fw ?? TARGET_WIDTH;
+  const h = fh ?? Math.round((TARGET_WIDTH * ASPECT_H) / ASPECT_W);
+
+  const mask = Buffer.from(
+    `<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+       <defs>
+         <radialGradient id="m" cx="50%" cy="${FOCUS_Y}%" r="72%">
+           <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+           <stop offset="${FOCUS_HOLD}%" stop-color="#fff" stop-opacity="1"/>
+           <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+         </radialGradient>
+       </defs>
+       <rect width="${w}" height="${h}" fill="url(#m)"/>
+     </svg>`,
+  );
+
+  const subject = await sharp(flat)
+    .composite([{ input: mask, blend: 'dest-in' }])
+    .png()
+    .toBuffer();
+
+  const composed = sharp(flat)
+    .blur(BLUR)
+    .composite([{ input: subject, blend: 'over' }]);
+
+  /**
    * One high-quality source only.
    *
    * next/image re-encodes to WebP or AVIF per the browser's Accept header, so
    * emitting an already-compressed AVIF here would compress lossily twice.
    * Quality is set high because this file is the master, not what ships.
    */
-  const webp = await base
-    .clone()
+  const webp = await composed
     .webp({ quality: 92, effort: 6 })
     .toFile(join(OUT_DIR, `${BASENAME}.webp`));
 
   console.log(`  source     ${sourceWidth}x${sourceHeight}`);
   console.log(`  crop       ${safeWidth}x${safeHeight} at ${safeLeft},${safeTop}`);
+  console.log(`  depth      blur ${BLUR}, focus ${FOCUS_Y}% hold ${FOCUS_HOLD}%`);
   console.log(`  master     ${(webp.size / 1024).toFixed(0)}KB webp`);
 };
 
