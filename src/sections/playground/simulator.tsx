@@ -40,6 +40,14 @@ const BREAKER_TONE = {
   open: 'text-status-fail',
 } as const;
 
+/** Spoken on transition only. Phrased as a state, not as a number. */
+const BREAKER_ANNOUNCEMENT = {
+  closed: 'Circuit breaker closed. Requests are reaching the processor.',
+  'half-open':
+    'Circuit breaker half open. A single probe request is being allowed through.',
+  open: 'Circuit breaker open. Requests are being parked instead of sent to the processor.',
+} as const;
+
 function Metric({
   label,
   value,
@@ -96,10 +104,17 @@ export function Simulator() {
         </div>
 
         {/* The same state as text. The canvas is an illustration of these
-            numbers, never the only way to read them. */}
+            numbers, never the only way to read them.
+
+            Deliberately NOT a live region. These refresh five times a second,
+            so announcing them would produce an unbroken stream of changing
+            numbers and make the section unusable with a screen reader — the
+            opposite of what a live region is for. They are a labelled group
+            instead, readable on demand, and only discrete state changes are
+            announced (below). */}
         <div
-          aria-live="polite"
-          aria-atomic="false"
+          role="group"
+          aria-label="Simulation metrics"
           className="mt-5 grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-3"
         >
           <Metric label="p50 latency" value={`${Math.round(snapshot.p50)}ms`} />
@@ -137,6 +152,14 @@ export function Simulator() {
       </div>
 
       {/* ---------------- Controls ---------------- */}
+      {/* Announces only discrete transitions. The text derives from the
+          breaker state alone, so it changes a handful of times per run rather
+          than five times a second — and identical text produces no
+          announcement at all. */}
+      <p className="sr-only" aria-live="polite">
+        {BREAKER_ANNOUNCEMENT[snapshot.breaker]}
+      </p>
+
       <div className="min-w-0 space-y-8">
         <div>
           <label htmlFor="rps" className="block">

@@ -1,10 +1,9 @@
 import { cn } from '@/lib/utils';
 
-interface MonoLabelProps {
+interface MonoLabelProps extends React.ComponentPropsWithoutRef<'span'> {
   children: React.ReactNode;
   /** `signal` marks live/active state. `flow` marks data. Default is muted. */
   tone?: 'muted' | 'signal' | 'flow';
-  className?: string;
 }
 
 const TONE_CLASS = {

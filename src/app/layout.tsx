@@ -3,6 +3,7 @@ import { Instrument_Sans, JetBrains_Mono } from 'next/font/google';
 import { buildPersonJsonLd, rootMetadata } from '@/lib/seo/metadata';
 import { SkipLink } from '@/components/ui/skip-link';
 import { TraceRail } from '@/components/trace/trace-rail';
+import { SiteFooter } from '@/components/ui/site-footer';
 import '@/styles/globals.css';
 
 /**
@@ -51,6 +52,9 @@ export default function RootLayout({
         {/* Clears the fixed mobile bar. The desktop rail sits beside the
             content rather than above it, so the offset is mobile-only. */}
         <main className="pt-(--spacing-mobile-bar) xl:pt-0">{children}</main>
+        <div className="xl:pl-(--spacing-rail)">
+          <SiteFooter />
+        </div>
       </body>
     </html>
   );

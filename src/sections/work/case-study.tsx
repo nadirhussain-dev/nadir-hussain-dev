@@ -50,7 +50,11 @@ export function CaseStudy({
           aria-controls={panelId}
           className="group flex w-full items-start gap-4 py-6 text-left sm:gap-6 sm:py-8"
         >
-          <MonoLabel tone="flow" className="mt-2 hidden shrink-0 sm:block">
+          <MonoLabel
+            tone="flow"
+            aria-hidden="true"
+            className="mt-2 hidden shrink-0 sm:block"
+          >
             {String(index + 1).padStart(2, '0')}
           </MonoLabel>
 
