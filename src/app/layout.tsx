@@ -1,24 +1,32 @@
 import type { Metadata, Viewport } from 'next';
 import { Instrument_Sans, JetBrains_Mono } from 'next/font/google';
-import { site } from '@/data/site';
+import { buildPersonJsonLd, rootMetadata } from '@/lib/seo/metadata';
+import { SkipLink } from '@/components/ui/skip-link';
+import { TraceRail } from '@/components/trace/trace-rail';
+import { SiteFooter } from '@/components/ui/site-footer';
 import '@/styles/globals.css';
 
-const sans = Instrument_Sans({
+/**
+ * Instrument Sans over Inter: it carries slightly more character in the
+ * terminals and a tighter aperture, which keeps large display sizes from
+ * reading as generic. JetBrains Mono is used as a design element throughout —
+ * metadata, labels, span ids — not only for code.
+ */
+const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-instrument-sans',
   display: 'swap',
+  adjustFontFallback: true,
 });
 
-const mono = JetBrains_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-jetbrains-mono',
   display: 'swap',
+  adjustFontFallback: true,
 });
 
-export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
-  description: site.focus,
-};
+export const metadata: Metadata = rootMetadata;
 
 export const viewport: Viewport = {
   themeColor: '#121010',
@@ -29,8 +37,25 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
-      <body className="font-sans">{children}</body>
+    <html lang="en" className={`${instrumentSans.variable} ${jetbrainsMono.variable}`}>
+      <body className="grain">
+        {/* Structured data is read by machines that cannot tell a placeholder
+            from a fact, so it emits only verified claims. */}
+        <script
+          type="application/ld+json"
+          // Serialised from typed content by JSON.stringify, never from user
+          // input, so there is no injection surface here.
+          dangerouslySetInnerHTML={{ __html: buildPersonJsonLd() }}
+        />
+        <SkipLink />
+        <TraceRail />
+        {/* Clears the fixed mobile bar. The desktop rail sits beside the
+            content rather than above it, so the offset is mobile-only. */}
+        <main className="pt-(--spacing-mobile-bar) xl:pt-0">{children}</main>
+        <div className="xl:pl-(--spacing-rail)">
+          <SiteFooter />
+        </div>
+      </body>
     </html>
   );
 }

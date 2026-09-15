@@ -1,37 +1,39 @@
-import { SPANS } from '@/data/spans';
-import { site } from '@/data/site';
+import { SPANS, type SpanId, type Span } from '@/data/spans';
+import { IdentitySection } from '@/sections/identity/identity-section';
+import { SystemsSection } from '@/sections/systems/systems-section';
+import { WorkSection } from '@/sections/work/work-section';
+import { TimelineSection } from '@/sections/timeline/timeline-section';
+import { StackSection } from '@/sections/stack/stack-section';
+import { PlaygroundSection } from '@/sections/playground/playground-section';
+import { ContactSection } from '@/sections/contact/contact-section';
 
 /**
- * Architectural placeholder.
+ * The trace.
  *
- * The section modules land one per commit; this renders the trace spine so
- * the structure is verifiable before any of it is implemented.
+ * Sections are rendered from the span registry, so page order, rail order and
+ * sitemap order all derive from one list and cannot drift apart.
+ *
+ * The registry is typed as a total map over SpanId: adding a span to the
+ * registry without building its section is a type error rather than a silently
+ * missing section.
  */
+const SECTIONS: Record<SpanId, (props: { span: Span }) => React.ReactNode> = {
+  identity: IdentitySection,
+  systems: SystemsSection,
+  work: WorkSection,
+  timeline: TimelineSection,
+  stack: StackSection,
+  playground: PlaygroundSection,
+  contact: ContactSection,
+};
+
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-10 px-6 py-24">
-      <header className="space-y-3">
-        <p className="font-mono text-xs tracking-widest text-signal uppercase">
-          trace · scaffold
-        </p>
-        <h1 className="text-4xl font-semibold tracking-tight text-balance">
-          {site.name}
-        </h1>
-        <p className="text-paper-100/60">{site.role}</p>
-      </header>
-
-      <ol className="space-y-2">
-        {SPANS.map((span) => (
-          <li
-            key={span.id}
-            className="flex items-baseline gap-3 font-mono text-sm"
-            style={{ paddingInlineStart: `${span.depth * 1.5}rem` }}
-          >
-            <span className="text-flow">{span.label}</span>
-            <span className="text-paper-100/40">{span.heading}</span>
-          </li>
-        ))}
-      </ol>
-    </main>
+    <div className="xl:pl-(--spacing-rail)">
+      {SPANS.map((span) => {
+        const SectionComponent = SECTIONS[span.id];
+        return <SectionComponent key={span.id} span={span} />;
+      })}
+    </div>
   );
 }

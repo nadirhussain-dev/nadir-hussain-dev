@@ -42,5 +42,3 @@ export const SPANS: readonly Span[] = [
   },
   { id: 'contact', label: 'open/channel', heading: 'Get in touch', depth: 0 },
 ] as const;
-
-export const SPAN_IDS: readonly SpanId[] = SPANS.map((span) => span.id);

@@ -1,32 +1,25 @@
-import { z } from 'zod';
-
 /**
- * Content integrity layer.
+ * Content integrity layer — types and helpers only.
  *
- * Every factual claim rendered on this site is parsed through these schemas.
- * The `provenance` field is mandatory and has no default: a claim must be
- * explicitly marked as verified by Nadir, or explicitly marked as a
- * placeholder awaiting confirmation. There is no third state, so content
- * cannot be silently invented — an unmarked claim fails to parse at build
- * time rather than shipping as though it were true.
+ * Deliberately free of zod. These helpers are imported by data modules that
+ * client components read (the architecture map, the stack explorer), and
+ * pulling a validation library into the browser to describe data that cannot
+ * change after build is pure cost. The schemas live in ./content-schema.ts and
+ * are imported only where validation actually runs, on the server.
+ *
+ * Every factual claim rendered on this site carries a `provenance`, and it has
+ * no default: a claim must be explicitly marked verified by Nadir, or
+ * explicitly marked a placeholder awaiting confirmation. There is no third
+ * state, so content cannot be silently invented.
  */
-export const provenanceSchema = z.enum(['verified', 'needs-confirmation']);
-export type Provenance = z.infer<typeof provenanceSchema>;
+export type Provenance = 'verified' | 'needs-confirmation';
 
-/** A value that is only rendered in production once Nadir has confirmed it. */
-export const claimSchema = <T extends z.ZodTypeAny>(value: T) =>
-  z.object({
-    value,
-    provenance: provenanceSchema,
-    /** Why this is still unconfirmed. Required for placeholders. */
-    note: z.string().optional(),
-  });
-
-export type Claim<T> = {
+export interface Claim<T> {
   value: T;
   provenance: Provenance;
+  /** Why this is still unconfirmed. Required for placeholders. */
   note?: string;
-};
+}
 
 /** Marks a confirmed fact. */
 export const verified = <T>(value: T): Claim<T> => ({
