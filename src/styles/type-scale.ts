@@ -14,5 +14,3 @@ export const FONT_SIZE_TOKENS = [
   'h2',
   'h1',
 ] as const;
-
-export type FontSizeToken = (typeof FONT_SIZE_TOKENS)[number];

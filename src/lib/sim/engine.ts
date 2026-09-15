@@ -1,4 +1,4 @@
-import { chance, createRng, next, sampleLatency, type Rng } from './random';
+import { chance, createRng, sampleLatency, type Rng } from './random';
 import type { SimConfig, SimRequest, SimState, Stage } from './types';
 
 /**
@@ -321,11 +321,3 @@ export function percentile(latencies: readonly number[], p: number): number {
   );
   return sorted[index] ?? 0;
 }
-
-/** Exposed so the UI can seed a fresh run without reaching into the RNG. */
-export const advanceRng = (state: SimState): number => {
-  const rng: Rng = { state: state.rngState };
-  const value = next(rng);
-  state.rngState = rng.state;
-  return value;
-};

@@ -11,10 +11,3 @@ export const provenanceSchema: z.ZodType<Provenance> = z.enum([
   'verified',
   'needs-confirmation',
 ]);
-
-export const claimSchema = <T extends z.ZodTypeAny>(value: T) =>
-  z.object({
-    value,
-    provenance: provenanceSchema,
-    note: z.string().optional(),
-  });
