@@ -8,7 +8,14 @@
  * section order can never drift between them.
  */
 export type SpanId =
-  'identity' | 'systems' | 'work' | 'timeline' | 'stack' | 'playground' | 'contact';
+  | 'identity'
+  | 'systems'
+  | 'work'
+  | 'fit'
+  | 'timeline'
+  | 'stack'
+  | 'playground'
+  | 'contact';
 
 export interface Span {
   id: SpanId;
@@ -32,6 +39,7 @@ export const SPANS: readonly Span[] = [
     depth: 0,
   },
   { id: 'work', label: 'query/work', heading: 'Selected work', depth: 1 },
+  { id: 'fit', label: 'match/role', heading: 'Check me against your role', depth: 1 },
   { id: 'timeline', label: 'query/history', heading: 'Trajectory', depth: 1 },
   { id: 'stack', label: 'inspect/stack', heading: 'Stack, by layer', depth: 0 },
   {

@@ -16,7 +16,13 @@ import { cn } from '@/lib/utils';
  * Server Component: the file check runs at build time and ships as static
  * markup.
  */
-export function Portrait({ className }: { className?: string }) {
+export function Portrait({
+  className,
+  lazy = false,
+}: {
+  className?: string;
+  lazy?: boolean;
+}) {
   const portrait = getPortraitStatus();
 
   if (!portrait.available) {
@@ -52,7 +58,7 @@ export function Portrait({ className }: { className?: string }) {
             // Sized for the hero column at each breakpoint, so the browser
             // never downloads a larger file than it can display.
             sizes="(min-width: 1024px) 22rem, (min-width: 640px) 18rem, 60vw"
-            priority
+            priority={!lazy}
             className="object-cover"
           />
         </div>

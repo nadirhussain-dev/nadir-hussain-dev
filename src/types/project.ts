@@ -39,6 +39,8 @@ export const projectSchema = z.object({
   challenges: z.array(z.string()),
   outcome: z.string().min(1),
   stack: z.array(z.string()),
+  /** Public source, when there is one. Private and client code stays unlinked. */
+  source: z.string().url().optional(),
 
   provenance: provenanceSchema,
   /** Required for drafts: what Nadir still needs to supply or correct. */

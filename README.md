@@ -45,6 +45,22 @@ timers, under 36 unit tests. Two of those tests found real modelling bugs, most
 notably a circuit breaker that tripped on _consecutive_ failures and therefore
 never opened under a 72% failure rate — exactly when it was needed.
 
+## Three things nobody expects
+
+**A drawn developer sits beside the headline.** `src/components/character/` is
+plain inline SVG: it blinks, types, and its eyes follow the cursor. A smaller
+version walks the page as a guide, and when the simulator's circuit breaker
+opens, it panics. To use a finished illustration instead, drop
+`public/character/nadir.png` in; the file is detected at build time.
+
+**A real terminal.** Ctrl/Cmd+K opens it from anywhere. `ls`, `open tessera`,
+`cv`, `contact` and a few others run through a pure, unit-tested interpreter in
+`src/lib/terminal/`.
+
+**The role matcher.** A recruiter pastes a job description and each requirement
+is matched to work they can open, with gaps listed rather than hidden. It runs
+in the browser, so nothing is sent or stored. See `src/lib/fit/`.
+
 ## Content integrity
 
 Nothing on this site is invented. That is enforced structurally rather than by
@@ -52,7 +68,8 @@ convention: every factual claim in `src/data/` is a `Claim<T>` that must be
 explicitly marked `verified` or `needs-confirmation`, with **no default**, so an
 unmarked claim fails to compile.
 
-Case studies and experience are committed as **drafts whose fields hold
+Case studies and experience now come from Nadir's CV and his repositories'
+READMEs. Anything unconfirmed is committed as a **draft whose fields hold
 questions rather than answers**. `isPublishable` excludes them from the
 production build entirely, so nothing unverified can ship — verified by asserting
 against the production HTML, not assumed.
@@ -87,7 +104,7 @@ page order, rail order and sitemap order cannot drift.
 
 ## Performance
 
-Client chunks are **696K**, down from 1.1M, after removing two dependencies that
+Client chunks were **696K**, down from 1.1M, after removing two dependencies that
 were paying rent for nothing:
 
 - `motion` backed a `Reveal` component that was never imported anywhere. Scroll
@@ -116,7 +133,7 @@ numeric readout goes through React, five times a second.
 ```bash
 pnpm dev             # dev server
 pnpm verify          # typecheck + lint + test + build
-pnpm test            # 55 unit tests
+pnpm test            # unit tests
 pnpm content:audit   # unconfirmed content claims
 ```
 
@@ -125,6 +142,4 @@ compresses a camera original for the hero portrait slot.
 
 ## Still needed
 
-Case studies, employment history, per-technology notes, a resume PDF in
-`public/resume/`, LinkedIn, location, the production domain, and a Search
-Console token. Run `pnpm content:audit` for the current list.
+The production domain and a Search Console token. Run `pnpm content:audit` for the current list.

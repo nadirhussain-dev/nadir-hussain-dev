@@ -4,6 +4,13 @@ import { buildPersonJsonLd, rootMetadata } from '@/lib/seo/metadata';
 import { SkipLink } from '@/components/ui/skip-link';
 import { TraceRail } from '@/components/trace/trace-rail';
 import { SiteFooter } from '@/components/ui/site-footer';
+import { Companion } from '@/components/character/companion';
+import { Terminal } from '@/components/terminal/terminal';
+import { projects } from '@/data/projects';
+import { site } from '@/data/site';
+import { getCharacterImage } from '@/lib/character';
+import { getResumeStatus } from '@/lib/resume';
+import { isPublishable } from '@/types/project';
 import '@/styles/globals.css';
 
 /**
@@ -36,6 +43,9 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const resume = getResumeStatus();
+  const characterImage = getCharacterImage();
+
   return (
     <html lang="en" className={`${instrumentSans.variable} ${jetbrainsMono.variable}`}>
       <body className="grain">
@@ -55,6 +65,20 @@ export default function RootLayout({
         <div className="xl:pl-(--spacing-rail)">
           <SiteFooter />
         </div>
+        <Companion imageSrc={characterImage} />
+        <Terminal
+          context={{
+            projects: projects
+              .filter(isPublishable)
+              .map(({ slug, name, summary }) => ({ slug, name, summary })),
+            email: site.email.value,
+            github: site.github.value,
+            linkedin: site.linkedin.value,
+            location: site.location.value,
+            role: site.role,
+            resumeHref: resume.available ? resume.href : null,
+          }}
+        />
       </body>
     </html>
   );

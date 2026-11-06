@@ -4,6 +4,10 @@ import { identity } from '@/data/identity';
 import { MonoLabel } from '@/components/ui/mono-label';
 import { Hairline } from '@/components/ui/hairline';
 import { Portrait } from '@/components/ui/portrait';
+import { HeroCharacter } from '@/components/character/hero-character';
+import { getCharacterImage } from '@/lib/character';
+import { getResumeStatus } from '@/lib/resume';
+import { TerminalButton } from '@/components/terminal/terminal-button';
 import { LoadTrace } from './load-trace';
 
 /**
@@ -15,6 +19,8 @@ import { LoadTrace } from './load-trace';
  * or shift the headline.
  */
 export function IdentitySection({ span }: { span: Span }) {
+  const resume = getResumeStatus();
+
   return (
     <section
       id={span.id}
@@ -46,10 +52,31 @@ export function IdentitySection({ span }: { span: Span }) {
           <p className="mt-4 max-w-xl text-pretty text-paper-400">
             {identity.subStatement.value}
           </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-2">
+            <a
+              href="#fit"
+              className="inline-flex min-h-11 items-center rounded-sm border border-signal bg-signal/10 px-4 font-mono text-meta text-signal transition-colors duration-(--duration-quick) hover:bg-signal/20"
+            >
+              Check me against your role
+            </a>
+            {resume.available && (
+              <a
+                href={resume.href}
+                download
+                className="inline-flex min-h-11 items-center rounded-sm border border-rule bg-ink-850 px-4 font-mono text-meta text-paper-200 transition-colors duration-(--duration-quick) hover:border-rule-strong"
+              >
+                Download CV
+              </a>
+            )}
+            <TerminalButton />
+          </div>
         </div>
 
-        <div className="flex flex-col gap-6 lg:justify-self-end">
-          <Portrait className="w-full max-w-[16rem] sm:max-w-[18rem]" />
+        <div className="flex flex-col items-center gap-6 lg:justify-self-end">
+          <HeroCharacter imageSrc={getCharacterImage()}>
+            <Portrait className="mx-auto w-full max-w-[18rem]" lazy />
+          </HeroCharacter>
           <LoadTrace />
         </div>
       </div>

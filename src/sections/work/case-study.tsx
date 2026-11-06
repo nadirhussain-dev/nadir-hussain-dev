@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import type { Project } from '@/types/project';
 import { MonoLabel } from '@/components/ui/mono-label';
@@ -40,8 +40,18 @@ export function CaseStudy({
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
+  // Deep links, from the terminal and the role matcher, arrive already open.
+  useEffect(() => {
+    const openIfTargeted = (): void => {
+      if (window.location.hash === `#${project.slug}`) setOpen(true);
+    };
+    openIfTargeted();
+    window.addEventListener('hashchange', openIfTargeted);
+    return () => window.removeEventListener('hashchange', openIfTargeted);
+  }, [project.slug]);
+
   return (
-    <article className="border-t border-rule">
+    <article id={project.slug} className="scroll-mt-24 border-t border-rule">
       <h3>
         <button
           type="button"
@@ -131,40 +141,58 @@ export function CaseStudy({
           </div>
 
           <div className="space-y-8">
-            <Field label="decisions">
-              <ul className="space-y-5">
-                {project.decisions.map((decision) => (
-                  <li key={decision.choice}>
-                    <p className="font-medium text-pretty text-paper-100">
-                      {decision.choice}
-                    </p>
-                    <p className="mt-1 text-meta text-pretty text-paper-500">
-                      instead of {decision.insteadOf}
-                    </p>
-                    <p className="mt-1.5 text-pretty text-paper-300">
-                      {decision.because}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </Field>
+            {project.decisions.length > 0 && (
+              <Field label="decisions">
+                <ul className="space-y-5">
+                  {project.decisions.map((decision) => (
+                    <li key={decision.choice}>
+                      <p className="font-medium text-pretty text-paper-100">
+                        {decision.choice}
+                      </p>
+                      <p className="mt-1 text-meta text-pretty text-paper-500">
+                        instead of {decision.insteadOf}
+                      </p>
+                      <p className="mt-1.5 text-pretty text-paper-300">
+                        {decision.because}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </Field>
+            )}
 
-            <Field label="what was hard">
-              <ul className="space-y-2">
-                {project.challenges.map((challenge) => (
-                  <li key={challenge} className="flex gap-3 text-pretty text-paper-300">
-                    <span aria-hidden="true" className="text-flow-dim">
-                      —
-                    </span>
-                    {challenge}
-                  </li>
-                ))}
-              </ul>
-            </Field>
+            {project.challenges.length > 0 && (
+              <Field label="what was hard">
+                <ul className="space-y-2">
+                  {project.challenges.map((challenge) => (
+                    <li
+                      key={challenge}
+                      className="flex gap-3 text-pretty text-paper-300"
+                    >
+                      <span aria-hidden="true" className="text-flow-dim">
+                        —
+                      </span>
+                      {challenge}
+                    </li>
+                  ))}
+                </ul>
+              </Field>
+            )}
 
             <Field label="outcome">
               <p className="text-pretty text-paper-300">{project.outcome}</p>
             </Field>
+
+            {project.source !== undefined && (
+              <a
+                href={project.source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block font-mono text-meta text-signal underline-offset-4 hover:underline"
+              >
+                View source<span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            )}
 
             {project.stack.length > 0 && (
               <>

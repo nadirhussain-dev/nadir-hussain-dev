@@ -7,10 +7,7 @@ import type { Provenance } from '@/types/content';
  * about how the person thinks the system divides up, which is the only
  * interesting thing a stack list can communicate.
  *
- * The technology names come from Nadir's own description of his stack. The
- * per-technology notes do not — those are prompts, and every entry is marked
- * needs-confirmation until he writes them. Unconfirmed notes are hidden in
- * production; the layer structure and the names still render.
+ * Names and notes come from Nadir's CV and the READMEs of his repositories.
  */
 export interface Technology {
   id: string;
@@ -28,11 +25,11 @@ export interface StackLayer {
   technologies: readonly Technology[];
 }
 
-const draft = (id: string, name: string): Technology => ({
+const tech = (id: string, name: string, note: string): Technology => ({
   id,
   name,
-  note: `TODO: Where do you actually use ${name}, and what do you understand about it that someone who had only read the docs would not?`,
-  provenance: 'needs-confirmation',
+  note,
+  provenance: 'verified',
 });
 
 export const STACK: readonly StackLayer[] = [
@@ -41,9 +38,26 @@ export const STACK: readonly StackLayer[] = [
     label: 'Interface',
     role: 'What the user touches, and the only layer where latency is felt directly.',
     technologies: [
-      draft('react', 'React'),
-      draft('nextjs', 'Next.js'),
-      draft('typescript', 'TypeScript'),
+      tech(
+        'react',
+        'React',
+        'Daily since 2023: subscription flows, dashboards and real-time interfaces.',
+      ),
+      tech(
+        'nextjs',
+        'Next.js',
+        'Client work and personal products, including this site on Next.js 16.',
+      ),
+      tech(
+        'typescript',
+        'TypeScript',
+        'The default everywhere, from UI to shared Zod contracts.',
+      ),
+      tech(
+        'zustand',
+        'Zustand',
+        'Domain-sync hooks with optimistic updates and automatic rollback.',
+      ),
     ],
   },
   {
@@ -51,31 +65,92 @@ export const STACK: readonly StackLayer[] = [
     label: 'Services',
     role: 'Where the rules that make the product what it is are enforced.',
     technologies: [
-      draft('node', 'Node.js'),
-      draft('nestjs', 'NestJS'),
-      draft('express', 'Express'),
+      tech('nestjs', 'NestJS', 'Payment APIs at work, and the Skolara API.'),
+      tech(
+        'fastapi',
+        'FastAPI',
+        'The SnapFind API, in front of a Python face-processing worker.',
+      ),
+      tech(
+        'websockets',
+        'WebSockets',
+        'Live chat with history and notifications on the Venota app.',
+      ),
+    ],
+  },
+  {
+    id: 'payments',
+    label: 'Payments',
+    role: 'The layer where a retry can cost someone real money.',
+    technologies: [
+      tech(
+        'stripe',
+        'Stripe',
+        'Subscriptions and an event-driven webhook pipeline with idempotency keys.',
+      ),
+      tech(
+        'paystack',
+        'Paystack',
+        'WebView checkout with webhook confirmation on Trek Train.',
+      ),
+      tech(
+        'safepay',
+        'Safepay',
+        'Pakistani payments for Daynora, running in sandbox on staging.',
+      ),
     ],
   },
   {
     id: 'data',
     label: 'Data',
     role: 'The layer permitted to be authoritative, and the hardest one to scale.',
-    technologies: [draft('postgres', 'PostgreSQL'), draft('supabase', 'Supabase')],
+    technologies: [
+      tech(
+        'postgres',
+        'PostgreSQL',
+        'Ledgers, row-level security and permissions enforced in the database.',
+      ),
+      tech(
+        'supabase',
+        'Supabase',
+        'Auth, RLS, Edge Functions and Storage across personal products.',
+      ),
+      tech('prisma', 'Prisma', 'The data layer behind the Skolara API.'),
+    ],
   },
   {
     id: 'mobile',
     label: 'Mobile',
     role: 'The same product under tighter constraints — network, battery, and no reload.',
-    technologies: [draft('react-native', 'React Native'), draft('expo', 'Expo')],
+    technologies: [
+      tech(
+        'react-native',
+        'React Native',
+        'Trek Train at work, and Daynora and Tessera on my own.',
+      ),
+      tech(
+        'expo',
+        'Expo',
+        'Dev builds, local SQLite and notifications for local-first apps.',
+      ),
+    ],
   },
   {
     id: 'infrastructure',
     label: 'Infrastructure',
     role: 'How the thing gets built, shipped and kept running.',
     technologies: [
-      draft('docker', 'Docker'),
-      draft('ci-cd', 'CI/CD'),
-      draft('cloud', 'Cloud'),
+      tech(
+        'docker',
+        'Docker',
+        'Local Postgres for Skolara and the production compose stack for SnapFind.',
+      ),
+      tech('ci-cd', 'CI/CD', 'Pipelines and release management in client work.'),
+      tech(
+        'cloudflare',
+        'Cloudflare Workers',
+        'Hosting for the Daynora web app and console.',
+      ),
     ],
   },
 ] as const;

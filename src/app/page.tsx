@@ -2,6 +2,7 @@ import { SPANS, type SpanId, type Span } from '@/data/spans';
 import { IdentitySection } from '@/sections/identity/identity-section';
 import { SystemsSection } from '@/sections/systems/systems-section';
 import { WorkSection } from '@/sections/work/work-section';
+import { FitSection } from '@/sections/fit/fit-section';
 import { TimelineSection } from '@/sections/timeline/timeline-section';
 import { StackSection } from '@/sections/stack/stack-section';
 import { PlaygroundSection } from '@/sections/playground/playground-section';
@@ -21,6 +22,7 @@ const SECTIONS: Record<SpanId, (props: { span: Span }) => React.ReactNode> = {
   identity: IdentitySection,
   systems: SystemsSection,
   work: WorkSection,
+  fit: FitSection,
   timeline: TimelineSection,
   stack: StackSection,
   playground: PlaygroundSection,

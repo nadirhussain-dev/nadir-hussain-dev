@@ -219,3 +219,179 @@ body {
     transform: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   The character
+   Everything here is transform or opacity, so it stays on the compositor. All
+   of it stops under prefers-reduced-motion, and the drawing is complete without
+   it.
+   --------------------------------------------------------------------------- */
+
+.nadir * {
+  transform-box: fill-box;
+}
+
+.nadir-pupils {
+  transform: translate(var(--look-x, 0px), var(--look-y, 0px));
+  transition: transform var(--duration-instant) linear;
+}
+
+.nadir-eyes {
+  transform-origin: center;
+  animation: nadir-blink 5.2s infinite;
+}
+
+.nadir-body {
+  transform-origin: 50% 100%;
+  animation: nadir-breathe 4.6s ease-in-out infinite;
+}
+
+.nadir-head {
+  transform-origin: 50% 90%;
+  animation: nadir-nod 7s ease-in-out infinite;
+}
+
+.nadir-hands ellipse {
+  animation: nadir-type 0.42s ease-in-out infinite alternate;
+}
+
+.nadir-hands ellipse:last-child {
+  animation-delay: 0.21s;
+}
+
+.nadir-led {
+  animation: nadir-pulse 2.4s ease-in-out infinite;
+}
+
+.nadir-chip {
+  animation: nadir-float 6s ease-in-out infinite;
+}
+
+.nadir-chip-b {
+  animation-delay: -1.5s;
+}
+
+.nadir-chip-c {
+  animation-delay: -3s;
+}
+
+.nadir-chip-d {
+  animation-delay: -4.5s;
+}
+
+.nadir-sweat {
+  opacity: 0;
+}
+
+.nadir-brows,
+.nadir-mouth {
+  transform-origin: center;
+  transition: transform var(--duration-quick) var(--ease-signature);
+}
+
+.nadir[data-mood='happy'] .nadir-mouth {
+  transform: scale(1.3, 1.5);
+}
+
+.nadir[data-mood='happy'] .nadir-brows {
+  transform: translateY(-4px);
+}
+
+.nadir[data-mood='alarm'] .nadir-brows {
+  transform: translateY(-7px);
+}
+
+.nadir[data-mood='alarm'] .nadir-mouth {
+  transform: scale(0.7, 1.2);
+}
+
+.nadir[data-mood='alarm'] .nadir-sweat {
+  opacity: 1;
+  animation: nadir-sweat 1.1s ease-in infinite;
+}
+
+.nadir[data-mood='alarm'] .nadir-hands ellipse {
+  animation-duration: 0.14s;
+}
+
+@keyframes nadir-blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes nadir-breathe {
+  50% {
+    transform: scale(1.012, 1.018);
+  }
+}
+
+@keyframes nadir-nod {
+  50% {
+    transform: rotate(1.4deg) translateY(1px);
+  }
+}
+
+@keyframes nadir-type {
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes nadir-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes nadir-float {
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes nadir-sweat {
+  to {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+.nadir-bubble {
+  animation: nadir-bubble 7s var(--ease-signature) forwards;
+}
+
+.nadir-companion:hover .nadir-bubble,
+.nadir-companion:focus-within .nadir-bubble {
+  animation: none;
+  opacity: 1;
+}
+
+@keyframes nadir-bubble {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  6%,
+  85% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nadir *,
+  .nadir-companion {
+    animation: none !important;
+    transition: none !important;
+  }
+}

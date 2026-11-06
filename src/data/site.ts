@@ -39,6 +39,9 @@ export const site = {
     'Node.js',
     'PostgreSQL',
     'Product Development',
+    'React Native',
+    'Local-first Software',
+    'Stripe',
   ]) satisfies Claim<readonly string[]>,
 
   /** Google Search Console verification token. */
@@ -63,18 +66,16 @@ export const site = {
    */
   email: verified('nh262464@gmail.com') satisfies Claim<string>,
 
-  /** Confirmed by Nadir: link the nadirhussain786 account publicly. */
-  github: verified('https://github.com/nadirhussain786') satisfies Claim<string>,
+  /** Current handle. The older nadirhussain786 URLs redirect here. */
+  github: verified('https://github.com/nadirhussain-dev') satisfies Claim<string>,
 
-  linkedin: needsConfirmation(
-    '',
-    'LinkedIn URL not present in the repository. Provide it or the link will be omitted.',
+  /** From Nadir's CV. */
+  linkedin: verified(
+    'https://www.linkedin.com/in/nadir-hussain-b03b55235',
   ) satisfies Claim<string>,
 
-  location: needsConfirmation(
-    '',
-    'Location not present in the repository. Provide it or it will be omitted.',
-  ) satisfies Claim<string>,
+  /** From Nadir's CV. */
+  location: verified('Multan, Pakistan') satisfies Claim<string>,
 } as const;
 
 export type Site = typeof site;
