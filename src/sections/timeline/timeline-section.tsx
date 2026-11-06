@@ -8,12 +8,12 @@ export function TimelineSection({ span }: { span: Span }) {
   const [job, school] = experience.filter(isPublishable);
 
   return (
-    <Section span={span} className="bg-screen">
+    <Section span={span} className="bg-grass">
       <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] md:gap-16">
         <div>
           {job && (
             <>
-              <p className="text-h3 font-bold">
+              <p className="font-display text-h3">
                 {job.role} at Devnodes, {job.period.replace('—', 'to')}
               </p>
               <p className="mt-3 max-w-xl text-lead text-pretty">{job.summary}</p>

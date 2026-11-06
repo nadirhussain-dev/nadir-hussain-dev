@@ -6,16 +6,19 @@ The brief was not "a website with my projects on it". It was to build something
 that answers a question before a visitor thinks to ask it: _how does this person
 think about systems?_
 
-## Concept
+## Concept: Nadir's Quest
 
-The whole site is built from one picture: Nadir's character art.
+The resume is a side-scrolling game. Scrolling drives Nadir's kart past his
+university and Devnodes, opens a chest for each project, and ends at a castle
+after the Timeout Monster. Arrow keys work too.
 
-- **Layered hero.** The art is split into back, middle and front layers in
-  `public/art/`, which move at different speeds with the pointer and scroll.
-- **Sampled palette.** Every colour comes from the art: wall, screen glow, desk,
-  lamp and hoodie. See `src/styles/tokens.css`.
-- **Projects as a book stack**, like the books on his desk. Each book opens in
-  place to show the key decisions and the result.
+The same content follows in a normal resume, reached at any time with "Skip to
+resume", so nobody has to play. Visitors who prefer reduced motion get the title
+screen, then the resume.
+
+- `src/data/quest.ts` is the road: every stop, in order.
+- `src/lib/game/world.ts` turns scroll into road position. It is pure and tested.
+- `src/components/game/` draws the world in CSS and SVG, with no game engine.
 
 Also on the page: a role matcher that links job requirements to proof and lists
 gaps (`src/lib/fit/`), a deterministic payments simulator (`src/lib/sim/`), and
@@ -40,7 +43,7 @@ pnpm content:audit   # lists every claim still awaiting confirmation
 
 ## Architecture
 
-Server Components by default. The hero parallax, books, role matcher, simulator
+Server Components by default. The game, quest log, role matcher, simulator
 and terminal are client islands. Fonts are self-hosted from `src/fonts/`, so a
 build needs no network access. Section order comes from `src/data/spans.ts`.
 

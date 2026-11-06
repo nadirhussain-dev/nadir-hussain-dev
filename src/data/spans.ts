@@ -14,10 +14,10 @@ export interface Span {
 
 export const SPANS: readonly Span[] = [
   { id: 'identity', label: 'Home', heading: 'Nadir Hussain' },
-  { id: 'work', label: 'Work', heading: 'Things I’ve built' },
-  { id: 'timeline', label: 'About', heading: 'Three years of shipping' },
-  { id: 'stack', label: 'Stack', heading: 'What’s on the shelf' },
+  { id: 'work', label: 'Work', heading: 'Quest log' },
+  { id: 'timeline', label: 'About', heading: 'My character' },
+  { id: 'stack', label: 'Stack', heading: 'Power-ups' },
   { id: 'fit', label: 'Role match', heading: 'Hiring? Paste your job description' },
-  { id: 'playground', label: 'Lab', heading: 'Break my payment system' },
+  { id: 'playground', label: 'Lab', heading: 'Fight the Timeout Monster' },
   { id: 'contact', label: 'Contact', heading: 'Let’s build something' },
 ] as const;

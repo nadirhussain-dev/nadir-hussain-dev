@@ -14,10 +14,10 @@ export const alt = `${site.name} — ${site.role}`;
  */
 export default function OpenGraphImage() {
   const spans = [
-    { width: 520, color: '#ffc27a' },
-    { width: 380, color: '#efc6bb' },
-    { width: 300, color: '#efc6bb' },
-    { width: 190, color: '#5c86fc' },
+    { width: 520, color: '#ffc83d' },
+    { width: 380, color: '#63c77a' },
+    { width: 300, color: '#63c77a' },
+    { width: 190, color: '#d99155' },
   ];
 
   return new ImageResponse(
@@ -28,7 +28,7 @@ export default function OpenGraphImage() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: '#41519e',
+        background: '#16233f',
         padding: 80,
         fontFamily: 'sans-serif',
       }}
@@ -85,7 +85,7 @@ export default function OpenGraphImage() {
             width: 8,
             height: 8,
             borderRadius: 4,
-            background: '#ffc27a',
+            background: '#ffc83d',
           }}
         />
         Scalable systems · architecture · payments

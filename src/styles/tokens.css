@@ -1,27 +1,25 @@
 /**
  * Design tokens.
  *
- * Every colour is sampled from Nadir's character art: the indigo wall, the
- * periwinkle screen glow, the blush desk, the lamp light and the black hoodie.
- *
- * The ink and paper ramps below are the dark surfaces (the lab and terminal).
- * `.light` in globals.css flips them for sections on a bright background.
+ * A bright cartoon world: sky, grass, dirt, gold coins, and a deep navy that
+ * outlines everything. The ink and paper ramps are for dark surfaces such as
+ * the lab and terminal; `.light` in globals.css flips them for bright ones.
  */
 @theme {
-  --color-wall: #41519e;
-  --color-screen: #5c86fc;
-  --color-desk: #efc6bb;
-  --color-lamp: #ffc27a;
-  --color-mist: #f4f2ff;
-  --color-hoodie: #171214;
+  --color-sky: #8fdcf5;
+  --color-grass: #63c77a;
+  --color-dirt: #d99155;
+  --color-coin: #ffc83d;
+  --color-cream: #fff8e8;
+  --color-night: #16233f;
 
-  --color-ink-950: #120e10;
-  --color-ink-900: #171214;
-  --color-ink-850: #211b1e;
-  --color-ink-800: #2a2327;
-  --color-ink-700: #3a3136;
-  --color-ink-600: #4c4247;
-  --color-ink-500: #685c63;
+  --color-ink-950: #0f1a31;
+  --color-ink-900: #16233f;
+  --color-ink-850: #1e2d4f;
+  --color-ink-800: #27385f;
+  --color-ink-700: #344672;
+  --color-ink-600: #435688;
+  --color-ink-500: #5a6d9e;
 
   --color-paper-100: #ffffff;
   --color-paper-200: #f1edf2;
@@ -29,13 +27,13 @@
   --color-paper-400: #bdb5c2;
   --color-paper-500: #a79fad;
 
-  --color-signal: #ffc27a;
+  --color-signal: #ffc83d;
   --color-signal-dim: #9a6a33;
   --color-flow: #8fb0ff;
   --color-flow-dim: #4a62b5;
 
   --color-status-ok: #6fe3c1;
-  --color-status-warn: #ffc27a;
+  --color-status-warn: #ffc83d;
   --color-status-fail: #ff6b78;
 
   --color-rule: oklch(from var(--color-paper-100) l c h / 0.14);
@@ -64,15 +62,15 @@
 
   --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
   --text-h3--line-height: 1.25;
-  --text-h3--letter-spacing: -0.01em;
+  --text-h3--letter-spacing: 0;
 
   --text-h2: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
   --text-h2--line-height: 1;
-  --text-h2--letter-spacing: -0.02em;
+  --text-h2--letter-spacing: 0;
 
-  --text-h1: clamp(3.5rem, 2.4rem + 4.8vw, 6.5rem);
-  --text-h1--line-height: 0.9;
-  --text-h1--letter-spacing: -0.035em;
+  --text-h1: clamp(3rem, 2rem + 4.4vw, 5.75rem);
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: 0;
 
   /* --- Motion ---------------------------------------------------------- */
   /* One signature curve, used everywhere, so motion feels like one system.

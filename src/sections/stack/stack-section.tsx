@@ -2,18 +2,15 @@ import type { Span } from '@/data/spans';
 import { STACK } from '@/data/stack';
 import { Section } from '@/components/ui/section';
 
-/** Each layer is one lit shelf, as in the artwork. */
+/** Skills, grouped by the layer of a product they work on. */
 export function StackSection({ span }: { span: Span }) {
   return (
-    <Section span={span} className="bg-mist">
-      <div className="space-y-6">
+    <Section span={span} className="bg-sky">
+      <div className="grid gap-5 md:grid-cols-2">
         {STACK.map((layer) => (
-          <div
-            key={layer.id}
-            className="grid gap-x-8 gap-y-1 border-b-4 border-lamp pb-3 md:grid-cols-[11rem_minmax(0,1fr)] md:items-baseline"
-          >
-            <h3 className="font-sans text-meta font-bold">{layer.label}</h3>
-            <p className="font-display text-h3 font-semibold">
+          <div key={layer.id} className="panel p-5">
+            <h3 className="font-sans font-extrabold">{layer.label}</h3>
+            <p className="font-display text-h3">
               {layer.technologies.map((technology) => technology.name).join(', ')}
             </p>
           </div>

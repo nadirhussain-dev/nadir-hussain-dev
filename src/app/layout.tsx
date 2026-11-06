@@ -3,7 +3,6 @@ import localFont from 'next/font/local';
 import { buildPersonJsonLd, rootMetadata } from '@/lib/seo/metadata';
 import { SkipLink } from '@/components/ui/skip-link';
 import { SiteFooter } from '@/components/ui/site-footer';
-import { SiteNav } from '@/components/nav/site-nav';
 import { Terminal } from '@/components/terminal/terminal';
 import { projects } from '@/data/projects';
 import { site } from '@/data/site';
@@ -13,15 +12,15 @@ import '@/styles/globals.css';
 
 /** Self-hosted, so the page never waits on a third-party font server. */
 const title = localFont({
-  src: '../fonts/bricolage-grotesque-latin-wght-normal.woff2',
-  weight: '200 800',
+  src: '../fonts/lilita-one-latin-400-normal.woff2',
+  weight: '400',
   variable: '--font-title',
   display: 'swap',
 });
 
 const body = localFont({
-  src: '../fonts/plus-jakarta-sans-latin-wght-normal.woff2',
-  weight: '200 800',
+  src: '../fonts/nunito-latin-wght-normal.woff2',
+  weight: '200 1000',
   variable: '--font-body',
   display: 'swap',
 });
@@ -36,7 +35,7 @@ const code = localFont({
 export const metadata: Metadata = rootMetadata;
 
 export const viewport: Viewport = {
-  themeColor: '#41519e',
+  themeColor: '#8fdcf5',
   colorScheme: 'light',
 };
 
@@ -57,7 +56,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: buildPersonJsonLd() }}
         />
         <SkipLink />
-        <SiteNav />
         <main>{children}</main>
         <SiteFooter />
         <Terminal

@@ -21,7 +21,7 @@ export function Section({
     >
       <div className="mx-auto w-full max-w-6xl">
         <header className="mb-10 max-w-2xl md:mb-14">
-          <h2 id={`${span.id}-heading`} className="text-h2 font-bold text-balance">
+          <h2 id={`${span.id}-heading`} className="text-h2 text-balance">
             {span.heading}
           </h2>
           {intro !== undefined && <p className="mt-4 text-lead text-pretty">{intro}</p>}

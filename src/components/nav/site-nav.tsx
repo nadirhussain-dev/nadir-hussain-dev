@@ -11,9 +11,12 @@ export function SiteNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-3 top-3 z-40 mx-auto max-w-6xl rounded-2xl bg-white text-hoodie shadow-[0_8px_30px_rgb(23_18_20/0.18)]">
-      <nav aria-label="Main" className="flex min-h-13 items-center gap-2 px-4">
-        <a href="#identity" className="mr-auto font-display text-lg font-bold">
+    <header className="sticky top-0 z-40 border-b-[5px] border-night bg-coin text-night">
+      <nav
+        aria-label="Main"
+        className="mx-auto flex min-h-14 max-w-6xl items-center gap-2 px-(--spacing-gutter)"
+      >
+        <a href="#resume" className="mr-auto font-display text-xl">
           Nadir Hussain
         </a>
         <ul className="hidden items-center gap-1 lg:flex">
@@ -21,7 +24,7 @@ export function SiteNav() {
             <li key={span.id}>
               <a
                 href={`#${span.id}`}
-                className="rounded-lg px-3 py-2 text-meta font-semibold hover:bg-mist"
+                className="rounded-lg px-3 py-2 font-extrabold hover:bg-cream"
               >
                 {span.label}
               </a>
@@ -31,7 +34,7 @@ export function SiteNav() {
         <button
           type="button"
           onClick={() => window.dispatchEvent(new Event(TERMINAL_EVENT))}
-          className="hidden rounded-lg px-3 py-2 text-meta font-semibold hover:bg-mist lg:block"
+          className="hidden rounded-lg px-3 py-2 font-extrabold hover:bg-cream lg:block"
         >
           Terminal
         </button>
@@ -47,7 +50,7 @@ export function SiteNav() {
         </button>
       </nav>
       {open && (
-        <ul id="mobile-nav" className="border-t border-hoodie/10 p-2 lg:hidden">
+        <ul id="mobile-nav" className="border-t border-night/20 p-2 lg:hidden">
           {LINKS.map((span) => (
             <li key={span.id}>
               <a
