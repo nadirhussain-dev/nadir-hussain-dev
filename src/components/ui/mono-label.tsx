@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 
-interface MonoLabelProps extends React.ComponentPropsWithoutRef<'span'> {
+interface LabelProps extends React.ComponentPropsWithoutRef<'span'> {
   children: React.ReactNode;
-  /** `signal` marks live/active state. `flow` marks data. Default is muted. */
+  /** `signal` marks live or active state, `flow` marks data. Default is muted. */
   tone?: 'muted' | 'signal' | 'flow';
 }
 
@@ -12,22 +12,10 @@ const TONE_CLASS = {
   flow: 'text-flow',
 } as const;
 
-/**
- * Monospaced metadata label.
- *
- * Mono is used here as a typographic device rather than as "code styling" —
- * it marks anything that is machine-ish: span ids, counts, keys, statuses.
- * Keeping that rule consistent is what makes the site read as instrumentation.
- */
-export function MonoLabel({ children, tone = 'muted', className }: MonoLabelProps) {
+/** A small, plain label for readings and field names. */
+export function MonoLabel({ children, tone = 'muted', className }: LabelProps) {
   return (
-    <span
-      className={cn(
-        'font-mono text-micro tracking-[0.08em] uppercase',
-        TONE_CLASS[tone],
-        className,
-      )}
-    >
+    <span className={cn('text-meta font-semibold', TONE_CLASS[tone], className)}>
       {children}
     </span>
   );

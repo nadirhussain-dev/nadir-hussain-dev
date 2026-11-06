@@ -2,53 +2,38 @@ import type { Span } from '@/data/spans';
 import { projects } from '@/data/projects';
 import { isPublishable } from '@/types/project';
 import { Section } from '@/components/ui/section';
-import { CaseStudy } from './case-study';
+import { Book, type BookStyle } from './book';
 
-/**
- * Selected work.
- *
- * Drafts render in development so they can be reviewed and filled in, and are
- * excluded from the production build entirely. That gate is the mechanism
- * behind "nothing invented ships" — it is enforced here rather than trusted.
- */
+/** Spine colours from the books in the artwork, with a slightly uneven stack. */
+const LOOKS: readonly BookStyle[] = [
+  { color: '#1f3a68', left: '0%', right: '3%' },
+  { color: '#7a3b52', left: '3%', right: '1%' },
+  { color: '#2e2a6b', left: '1%', right: '5%' },
+  { color: '#1d4d5c', left: '4%', right: '1%' },
+  { color: '#6f4a22', left: '0%', right: '3%' },
+  { color: '#41519e', left: '2%', right: '1%' },
+  { color: '#171214', left: '1%', right: '4%' },
+  { color: '#5b3a7a', left: '3%', right: '0%' },
+];
+
 export function WorkSection({ span }: { span: Span }) {
-  const isDev = process.env.NODE_ENV !== 'production';
-  const publishable = projects.filter(isPublishable);
-  const visible = isDev ? projects : publishable;
+  const published = projects.filter(isPublishable);
 
   return (
-    <Section span={span}>
-      {visible.length === 0 ? (
-        <p className="max-w-2xl text-lead text-pretty text-paper-400">
-          Case studies are being written. Rather than publish a placeholder that reads
-          like a description, this section stays empty until each project has a real
-          decision log behind it.
-        </p>
-      ) : (
-        <>
-          <p className="mb-2 max-w-2xl text-lead text-pretty text-paper-300">
-            What a project was is less interesting than what it forced a choice about.
-            Each of these opens into the decisions behind it, including the alternatives
-            that were rejected and what that cost.
-          </p>
-          <div className="mt-12 border-b border-rule">
-            {visible.map((project, index) => (
-              <CaseStudy
-                key={project.slug}
-                project={project}
-                index={index}
-                isDraft={!isPublishable(project)}
-              />
-            ))}
-          </div>
-          {isDev && publishable.length !== projects.length && (
-            <p className="mt-6 font-mono text-micro text-signal">
-              {projects.length - publishable.length} draft(s) hidden from production.
-              Run pnpm content:audit.
-            </p>
-          )}
-        </>
-      )}
+    <Section
+      span={span}
+      intro="Two client projects and six of my own. Open a book to see what I built and why."
+      className="bg-gradient-to-b from-[#dcacb6] to-desk"
+    >
+      <div className="space-y-1 pr-2">
+        {published.map((project, index) => (
+          <Book
+            key={project.slug}
+            project={project}
+            look={LOOKS[index % LOOKS.length] ?? LOOKS[0]!}
+          />
+        ))}
+      </div>
     </Section>
   );
 }

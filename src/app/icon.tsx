@@ -20,12 +20,12 @@ export default function Icon() {
         justifyContent: 'center',
         gap: 4,
         padding: 6,
-        background: '#121010',
+        background: '#41519e',
       }}
     >
-      <div style={{ height: 4, width: '100%', background: '#e8a33d' }} />
-      <div style={{ height: 4, width: '65%', background: '#4fb3a8' }} />
-      <div style={{ height: 4, width: '40%', background: '#2a5f5a' }} />
+      <div style={{ height: 4, width: '100%', background: '#ffc27a' }} />
+      <div style={{ height: 4, width: '65%', background: '#efc6bb' }} />
+      <div style={{ height: 4, width: '40%', background: '#5c86fc' }} />
     </div>,
     size,
   );
