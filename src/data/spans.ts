@@ -1,8 +1,7 @@
 /**
- * The trace spine.
+ * The tour.
  *
- * The site is structured as a single traced request resolving through a
- * system, where each section is a span. This registry is the single source of
+ * Each section is a stop in the 3D studio. This registry is the single source of
  * truth for section identity, order and depth — the navigation rail, the
  * scroll observer, the skip links and the sitemap all derive from it, so
  * section order can never drift between them.
@@ -19,7 +18,7 @@ export type SpanId =
 
 export interface Span {
   id: SpanId;
-  /** Rendered in the rail, in mono. */
+  /** Rendered in the navigation. */
   label: string;
   /** Human heading for the section itself. */
   heading: string;
@@ -31,22 +30,22 @@ export interface Span {
 }
 
 export const SPANS: readonly Span[] = [
-  { id: 'identity', label: 'resolve/identity', heading: 'Identity', depth: 0 },
+  { id: 'identity', label: 'Home', heading: 'Identity', depth: 0 },
   {
     id: 'systems',
-    label: 'trace/systems',
+    label: 'Approach',
     heading: 'How I think about systems',
     depth: 0,
   },
-  { id: 'work', label: 'query/work', heading: 'Selected work', depth: 1 },
-  { id: 'fit', label: 'match/role', heading: 'Check me against your role', depth: 1 },
-  { id: 'timeline', label: 'query/history', heading: 'Trajectory', depth: 1 },
-  { id: 'stack', label: 'inspect/stack', heading: 'Stack, by layer', depth: 0 },
+  { id: 'work', label: 'Work', heading: 'Selected work', depth: 1 },
+  { id: 'fit', label: 'Role match', heading: 'Check me against your role', depth: 1 },
+  { id: 'timeline', label: 'Journey', heading: 'Trajectory', depth: 1 },
+  { id: 'stack', label: 'Stack', heading: 'Stack, by layer', depth: 0 },
   {
     id: 'playground',
-    label: 'simulate/payments',
+    label: 'Lab',
     heading: 'Resilience simulator',
     depth: 0,
   },
-  { id: 'contact', label: 'open/channel', heading: 'Get in touch', depth: 0 },
+  { id: 'contact', label: 'Contact', heading: 'Get in touch', depth: 0 },
 ] as const;

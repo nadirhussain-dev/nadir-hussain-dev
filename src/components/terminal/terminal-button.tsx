@@ -9,7 +9,7 @@ export function TerminalButton() {
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event(TERMINAL_EVENT))}
-      className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-rule bg-ink-850 px-4 font-mono text-meta text-paper-200 transition-colors duration-(--duration-quick) hover:border-rule-strong"
+      className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-rule-strong bg-ink-850/80 px-4 font-mono text-meta text-paper-100 transition-colors duration-(--duration-quick) hover:border-signal"
     >
       <SquareTerminal aria-hidden="true" className="size-4" />
       Open terminal

@@ -6,52 +6,40 @@ The brief was not "a website with my projects on it". It was to build something
 that answers a question before a visitor thinks to ask it: _how does this person
 think about systems?_
 
-## Concept — "The Trace"
+## Concept: the studio
 
-The site is structured as **a single traced request resolving through a system**.
-Each section is a span; the navigation rail is the span waterfall.
+The site is a tour of Nadir's developer studio, built from his character art.
+A real-time 3D room sits behind the page, and scrolling flies the camera from
+stop to stop: the neon sign, the monitor, the shelves, the book stack and the
+robot. The monitor's text follows the section you are reading.
 
-This was chosen over the alternatives because the metaphor does real work rather
-than decorating:
+- **The character has depth.** The cut-out is pushed forward by a depth map in
+  a vertex shader, so it shifts with the camera instead of reading as a flat
+  sticker.
+- **The room reacts.** When the simulator's circuit breaker opens, the neon and
+  the robot's eyes turn red until it recovers.
+- **No model files.** Geometry and textures are generated in code in
+  `src/components/studio/build-studio.ts`.
+- **The flight path is pure.** `src/lib/scene/path.ts` runs without a GPU and is
+  unit-tested. Stops live in `src/lib/scene/stations.ts`.
+- **It degrades cleanly.** three.js loads in its own lazy chunk, after a poster
+  image. With reduced motion or no WebGL the poster stays. Weak devices drop
+  resolution automatically.
 
-- the rail is simultaneously navigation, scroll progress and information
-  hierarchy — three jobs, one element
-- distributed tracing is native to the domain (scalable systems, payments), so
-  the framing is honest rather than themed
-- it degrades cleanly: with JavaScript disabled or motion reduced, the rail is
-  still a working table of contents
+## The simulator
 
-A pan/zoom "blueprint canvas" was considered and rejected as the shell — it is
-hostile on touch and effectively impossible to make keyboard-accessible. That
-pattern survives only _inside_ the systems section, where it is scoped and
-navigable.
-
-## Two things worth opening the repo for
-
-**The hero shows the trace of the request that delivered the page you are
-looking at.** Real Navigation Timing measurements from the visitor's own
-browser — DNS, TLS, request, response, DOM, paint, hydrate — not a mock and not
-an animation on a loop. A portfolio claiming systems literacy should be able to
-show its own request breakdown. The numbers stay honest even when unflattering.
-
-**The playground is a deterministic payments simulation.** Set the traffic, then
-break something: cold cache, slow database, processor timing out. The pipeline
-responds honestly — queue depth grows, the circuit breaker trips on failure rate
-over a rolling window, retries back off, and idempotency keys stop a duplicate
-charge when an ambiguous timeout hid one that actually landed.
+The playground is a deterministic payments simulation. Set the traffic, then
+break something: cold cache, slow database, processor timing out. Queue depth
+grows, the circuit breaker trips on failure rate over a rolling window, retries
+back off, and idempotency keys stop duplicate charges.
 
 It lives in `src/lib/sim/` as pure TypeScript with no React, no DOM and no
-timers, under 36 unit tests. Two of those tests found real modelling bugs, most
-notably a circuit breaker that tripped on _consecutive_ failures and therefore
-never opened under a 72% failure rate — exactly when it was needed.
+timers, under unit tests.
 
-## Three things nobody expects
+## Other things worth trying
 
-**A drawn developer sits beside the headline.** `src/components/character/` is
-plain inline SVG: it blinks, types, and its eyes follow the cursor. A smaller
-version walks the page as a guide, and when the simulator's circuit breaker
-opens, it panics. To use a finished illustration instead, drop
-`public/character/nadir.png` in; the file is detected at build time.
+**A guide walks the page.** A small avatar of Nadir comments on each section,
+and panics when the simulator's breaker opens.
 
 **A real terminal.** Ctrl/Cmd+K opens it from anywhere. `ls`, `open tessera`,
 `cv`, `contact` and a few others run through a pure, unit-tested interpreter in
@@ -83,8 +71,8 @@ pnpm content:audit   # lists every claim still awaiting confirmation
 ```
 src/
 ├── app/          Server Components by default; metadata, sitemap, robots, OG
-├── components/   ui/ primitives, trace/ rail
-├── sections/     one module per span
+├── components/   ui/ primitives, studio/ 3D scene, trace/ navigation
+├── sections/     one module per tour stop
 ├── lib/
 │   ├── sim/      pure-TS discrete-event simulation (no React, unit-tested)
 │   ├── perf/     Navigation Timing → span waterfall (pure, unit-tested)
@@ -104,18 +92,9 @@ page order, rail order and sitemap order cannot drift.
 
 ## Performance
 
-Client chunks were **696K**, down from 1.1M, after removing two dependencies that
-were paying rent for nothing:
-
-- `motion` backed a `Reveal` component that was never imported anywhere. Scroll
-  reveals are now CSS scroll-driven animations — no dependency, no client
-  component, and they run off the main thread. Where `animation-timeline` is
-  unsupported, content is simply visible, which is the correct degradation.
-- `zod` was reaching the browser because `types/content.ts` mixed helpers with
-  schemas and a client component imported those helpers. Split.
-
-The simulation state lives in a ref and the canvas reads it at 60fps; only the
-numeric readout goes through React, five times a second.
+three.js is about 130KB gzipped and loads in its own chunk after first paint, so
+the headline is static HTML and never waits for it. Rendering pauses in hidden
+tabs, and resolution drops if a device cannot hold about 28fps.
 
 ## Accessibility
 

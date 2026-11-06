@@ -1,47 +1,41 @@
 /**
  * Design tokens.
  *
- * Two rules govern this palette and they are why the site does not look like
- * every other engineering portfolio:
+ * Taken from the studio in Nadir's character art: deep indigo walls, a cold
+ * neon sign and warm shelf light.
  *
- * 1. The neutrals are WARM. The default in this space is a cold near-black
- *    (#0A0A0A) with blue-grey mids. Shifting the whole ramp warm reads as
- *    considered rather than defaulted, and it makes the amber accent sit in
- *    the palette instead of on top of it.
- *
- * 2. Each accent has exactly ONE semantic job. `signal` means live/active.
- *    `flow` means data in motion. They are never decorative, never swapped,
- *    and never gradient-blended together. That constraint is doing more work
- *    for the visual identity than any effect could.
+ * Each accent keeps one job. `signal` is the neon: live, active, "you are
+ * here". `flow` is violet: labels and data in motion. Amber is reserved for
+ * warnings, because in that room it only ever comes from the shelf lamps.
  */
 @theme {
   /* --- Warm graphite ramp --------------------------------------------- */
-  --color-ink-950: #0d0b0b;
-  --color-ink-900: #121010;
-  --color-ink-850: #171413;
-  --color-ink-800: #1e1a19;
-  --color-ink-700: #2a2523;
-  --color-ink-600: #3a3331;
-  --color-ink-500: #544b48;
+  --color-ink-950: #06071a;
+  --color-ink-900: #0a0c24;
+  --color-ink-850: #10132f;
+  --color-ink-800: #171a3b;
+  --color-ink-700: #22264d;
+  --color-ink-600: #31366a;
+  --color-ink-500: #4b5190;
 
-  --color-paper-100: #f4f1ec;
-  --color-paper-200: #e3ddd4;
-  --color-paper-300: #c6bdb2;
-  --color-paper-400: #a89f97;
-  --color-paper-500: #877e78;
+  --color-paper-100: #f4f6ff;
+  --color-paper-200: #dfe4fb;
+  --color-paper-300: #bcc4ea;
+  --color-paper-400: #a3acd6;
+  --color-paper-500: #8f98c8;
 
   /* --- Accents: one job each ------------------------------------------ */
   /* Live / active / "you are here". Never decoration. */
-  --color-signal: #e8a33d;
-  --color-signal-dim: #8a5f20;
+  --color-signal: #7fdcff;
+  --color-signal-dim: #2f7ea6;
   /* Data in motion: trace lines, request flow, edges. Never text. */
-  --color-flow: #4fb3a8;
-  --color-flow-dim: #2a5f5a;
+  --color-flow: #b29bff;
+  --color-flow-dim: #5a4bb0;
 
   /* --- Status: reserved for the simulator, where it encodes state ------ */
-  --color-status-ok: #4fb3a8;
-  --color-status-warn: #e8a33d;
-  --color-status-fail: #d4553f;
+  --color-status-ok: #5eead4;
+  --color-status-warn: #ffb36b;
+  --color-status-fail: #ff5f6d;
 
   /* --- Structure ------------------------------------------------------- */
   /* Hairlines that read as a technical drawing sheet, not as borders. */

@@ -15,16 +15,16 @@ export function SiteFooter() {
   const github = isVerified(site.github) ? site.github.value : '';
 
   return (
-    <footer className="border-t border-rule px-(--spacing-gutter) py-10">
+    <footer className="border-t border-rule bg-ink-950/90 px-(--spacing-gutter) py-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <MonoLabel tone="flow">end of trace</MonoLabel>
+          <MonoLabel tone="flow">end of tour</MonoLabel>
           <p className="mt-2 text-meta text-paper-400">
             {site.name} — {site.role}
           </p>
           <p className="mt-1 text-micro text-paper-500">
-            © {year}. Built with Next.js and TypeScript. Statically rendered; the
-            interactive parts are client islands.
+            © {year}. Built with Next.js, TypeScript and three.js. Statically rendered;
+            the interactive parts are client islands.
           </p>
         </div>
 

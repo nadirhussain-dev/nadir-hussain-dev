@@ -5,10 +5,10 @@ import { SkipLink } from '@/components/ui/skip-link';
 import { TraceRail } from '@/components/trace/trace-rail';
 import { SiteFooter } from '@/components/ui/site-footer';
 import { Companion } from '@/components/character/companion';
+import { StudioCanvas } from '@/components/studio/studio-canvas';
 import { Terminal } from '@/components/terminal/terminal';
 import { projects } from '@/data/projects';
 import { site } from '@/data/site';
-import { getCharacterImage } from '@/lib/character';
 import { getResumeStatus } from '@/lib/resume';
 import { isPublishable } from '@/types/project';
 import '@/styles/globals.css';
@@ -36,7 +36,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = rootMetadata;
 
 export const viewport: Viewport = {
-  themeColor: '#121010',
+  themeColor: '#0a0c24',
   colorScheme: 'dark',
 };
 
@@ -44,7 +44,6 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const resume = getResumeStatus();
-  const characterImage = getCharacterImage();
 
   return (
     <html lang="en" className={`${instrumentSans.variable} ${jetbrainsMono.variable}`}>
@@ -57,6 +56,7 @@ export default function RootLayout({
           // input, so there is no injection surface here.
           dangerouslySetInnerHTML={{ __html: buildPersonJsonLd() }}
         />
+        <StudioCanvas />
         <SkipLink />
         <TraceRail />
         {/* Clears the fixed mobile bar. The desktop rail sits beside the
@@ -65,7 +65,7 @@ export default function RootLayout({
         <div className="xl:pl-(--spacing-rail)">
           <SiteFooter />
         </div>
-        <Companion imageSrc={characterImage} />
+        <Companion />
         <Terminal
           context={{
             projects: projects

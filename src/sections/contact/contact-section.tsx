@@ -4,6 +4,8 @@ import { site } from '@/data/site';
 import { isVerified, type Claim } from '@/types/content';
 import { Section } from '@/components/ui/section';
 import { MonoLabel } from '@/components/ui/mono-label';
+import { Portrait } from '@/components/ui/portrait';
+import { LoadTrace } from '@/sections/identity/load-trace';
 import { ResumePanel } from './resume-panel';
 
 /**
@@ -52,7 +54,7 @@ export function ContactSection({ span }: { span: Span }) {
 
   return (
     <Section span={span}>
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
         <div>
           <p className="max-w-xl text-lead text-pretty text-paper-300">
             If any of this was useful, or you want to talk about a system you are trying
@@ -93,7 +95,11 @@ export function ContactSection({ span }: { span: Span }) {
           )}
         </div>
 
-        <ResumePanel />
+        <div className="flex flex-col gap-6">
+          <Portrait className="w-full max-w-[12rem]" lazy />
+          <ResumePanel />
+          <LoadTrace />
+        </div>
       </div>
     </Section>
   );

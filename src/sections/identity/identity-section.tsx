@@ -1,22 +1,17 @@
 import type { Span } from '@/data/spans';
 import { site } from '@/data/site';
 import { identity } from '@/data/identity';
-import { MonoLabel } from '@/components/ui/mono-label';
 import { Hairline } from '@/components/ui/hairline';
-import { Portrait } from '@/components/ui/portrait';
-import { HeroCharacter } from '@/components/character/hero-character';
-import { getCharacterImage } from '@/lib/character';
-import { getResumeStatus } from '@/lib/resume';
+import { MonoLabel } from '@/components/ui/mono-label';
 import { TerminalButton } from '@/components/terminal/terminal-button';
-import { LoadTrace } from './load-trace';
+import { getResumeStatus } from '@/lib/resume';
 
 /**
- * The root span.
+ * The opening shot.
  *
- * A Server Component: the headline is the LCP element and ships as static HTML
- * with no JavaScript in front of it. Only the load trace is a client island,
- * and it renders nothing until it has real measurements, so it can never delay
- * or shift the headline.
+ * The headline is static HTML over the 3D room, so it stays the LCP element and
+ * never waits for WebGL. On desktop the camera frames the character to the
+ * right of this text; on phones, above it.
  */
 export function IdentitySection({ span }: { span: Span }) {
   const resume = getResumeStatus();
@@ -25,38 +20,34 @@ export function IdentitySection({ span }: { span: Span }) {
     <section
       id={span.id}
       aria-labelledby={`${span.id}-heading`}
-      className="flex min-h-[calc(100dvh-var(--spacing-mobile-bar))] scroll-mt-24 flex-col justify-center px-(--spacing-gutter) py-16 sm:py-24 xl:min-h-dvh"
+      className="hero-veil flex min-h-dvh scroll-mt-24 flex-col justify-end px-(--spacing-gutter) pt-[50dvh] pb-10 lg:justify-center lg:py-24"
     >
-      <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
-        <div>
-          <div className="mb-6 flex items-center gap-4">
-            <MonoLabel tone="flow">{span.label}</MonoLabel>
-            <Hairline className="w-16" />
-            <MonoLabel>root span</MonoLabel>
-          </div>
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="max-w-xl">
+          <MonoLabel tone="flow">Build · Innovate · Grow</MonoLabel>
 
           <h1
             id={`${span.id}-heading`}
-            className="text-h1 font-semibold tracking-tight text-balance text-paper-100"
+            className="neon-text mt-4 text-h1 font-semibold tracking-tight text-balance"
           >
             {site.name}
           </h1>
 
-          <p className="mt-4 text-h3 font-medium text-paper-300">{site.role}</p>
+          <p className="mt-3 text-h3 font-medium text-paper-200">{site.role}</p>
 
-          <Hairline className="my-8 max-w-md" />
+          <Hairline className="my-6 max-w-md lg:my-8" />
 
-          <p className="max-w-xl text-lead text-pretty text-paper-200">
+          <p className="text-lead text-pretty text-paper-100">
             {identity.statement.value}
           </p>
-          <p className="mt-4 max-w-xl text-pretty text-paper-400">
+          <p className="mt-4 hidden text-pretty text-paper-300 sm:block">
             {identity.subStatement.value}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-2">
+          <div className="mt-7 flex flex-wrap items-center gap-2">
             <a
               href="#fit"
-              className="inline-flex min-h-11 items-center rounded-sm border border-signal bg-signal/10 px-4 font-mono text-meta text-signal transition-colors duration-(--duration-quick) hover:bg-signal/20"
+              className="inline-flex min-h-11 items-center rounded-lg border border-signal bg-signal/15 px-4 font-mono text-meta text-signal transition-colors duration-(--duration-quick) hover:bg-signal/25"
             >
               Check me against your role
             </a>
@@ -64,20 +55,13 @@ export function IdentitySection({ span }: { span: Span }) {
               <a
                 href={resume.href}
                 download
-                className="inline-flex min-h-11 items-center rounded-sm border border-rule bg-ink-850 px-4 font-mono text-meta text-paper-200 transition-colors duration-(--duration-quick) hover:border-rule-strong"
+                className="inline-flex min-h-11 items-center rounded-lg border border-rule-strong bg-ink-850/80 px-4 font-mono text-meta text-paper-100 transition-colors duration-(--duration-quick) hover:border-signal"
               >
                 Download CV
               </a>
             )}
             <TerminalButton />
           </div>
-        </div>
-
-        <div className="flex flex-col items-center gap-6 lg:justify-self-end">
-          <HeroCharacter imageSrc={getCharacterImage()}>
-            <Portrait className="mx-auto w-full max-w-[18rem]" lazy />
-          </HeroCharacter>
-          <LoadTrace />
         </div>
       </div>
     </section>

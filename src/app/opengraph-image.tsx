@@ -14,10 +14,10 @@ export const alt = `${site.name} — ${site.role}`;
  */
 export default function OpenGraphImage() {
   const spans = [
-    { width: 520, color: '#e8a33d' },
-    { width: 380, color: '#4fb3a8' },
-    { width: 300, color: '#4fb3a8' },
-    { width: 190, color: '#2a5f5a' },
+    { width: 520, color: '#7fdcff' },
+    { width: 380, color: '#b29bff' },
+    { width: 300, color: '#b29bff' },
+    { width: 190, color: '#5a4bb0' },
   ];
 
   return new ImageResponse(
@@ -28,7 +28,7 @@ export default function OpenGraphImage() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: '#121010',
+        background: '#0a0c24',
         padding: 80,
         fontFamily: 'sans-serif',
       }}
@@ -52,7 +52,7 @@ export default function OpenGraphImage() {
           style={{
             fontSize: 84,
             fontWeight: 600,
-            color: '#f4f1ec',
+            color: '#f4f6ff',
             letterSpacing: -3,
             lineHeight: 1,
           }}
@@ -63,7 +63,7 @@ export default function OpenGraphImage() {
           style={{
             marginTop: 20,
             fontSize: 34,
-            color: '#a89f97',
+            color: '#a3acd6',
             letterSpacing: -0.5,
           }}
         >
@@ -77,7 +77,7 @@ export default function OpenGraphImage() {
           alignItems: 'center',
           gap: 14,
           fontSize: 22,
-          color: '#7d746e',
+          color: '#8f98c8',
         }}
       >
         <div
@@ -85,7 +85,7 @@ export default function OpenGraphImage() {
             width: 8,
             height: 8,
             borderRadius: 4,
-            background: '#e8a33d',
+            background: '#7fdcff',
           }}
         />
         Scalable systems · architecture · payments

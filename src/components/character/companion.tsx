@@ -5,7 +5,6 @@ import { X } from 'lucide-react';
 import type { SpanId } from '@/data/spans';
 import { useTraceProgress } from '@/hooks/use-trace-progress';
 import { MonoLabel } from '@/components/ui/mono-label';
-import { CharacterArt } from './character-art';
 
 /** Fired by the simulator, so the character can react to a live failure. */
 export const BREAKER_EVENT = 'nadir:breaker';
@@ -44,7 +43,7 @@ const ALARM_LINE = 'Breaker’s open! That’s it protecting the processor.';
  * avatar brings it back. Dismissal is remembered per visitor, and storage
  * failures simply mean it comes back.
  */
-export function Companion({ imageSrc }: { imageSrc: string | null }) {
+export function Companion() {
   const { activeId } = useTraceProgress();
   const [alarm, setAlarm] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -94,13 +93,16 @@ export function Companion({ imageSrc }: { imageSrc: string | null }) {
           <X aria-hidden="true" className="size-3.5" />
         </button>
       </div>
-      <div className="size-16 shrink-0 overflow-hidden rounded-full border border-rule-strong bg-ink-800">
-        {imageSrc === null ? (
-          <CharacterArt crop="bust" mood={alarm ? 'alarm' : 'idle'} />
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={imageSrc} alt="" className="size-full object-cover object-top" />
-        )}
+      <div
+        data-alarm={alarm}
+        className="nadir-avatar size-16 shrink-0 overflow-hidden rounded-full border border-signal bg-ink-800"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/character/nadir-avatar.webp"
+          alt=""
+          className="size-full object-cover"
+        />
       </div>
     </aside>
   );

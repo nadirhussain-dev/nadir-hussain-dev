@@ -71,10 +71,10 @@ export function TraceRail() {
       {/* ---------------- Desktop rail ---------------- */}
       <nav
         aria-label="Trace"
-        className="fixed top-0 z-40 hidden h-dvh w-(--spacing-rail) flex-col justify-center gap-6 pl-(--spacing-gutter) xl:flex"
+        className="fixed top-1/2 left-4 z-40 hidden w-(--spacing-rail) -translate-y-1/2 flex-col justify-center gap-5 rounded-2xl border border-rule bg-ink-900/70 p-4 backdrop-blur-md xl:flex"
       >
         <div className="flex items-center gap-2">
-          <MonoLabel tone="flow">trace</MonoLabel>
+          <MonoLabel tone="flow">studio tour</MonoLabel>
           <span
             aria-hidden="true"
             className="h-1 w-1 animate-pulse rounded-full bg-signal"
@@ -124,7 +124,7 @@ export function TraceRail() {
               {activeSpan?.label}
             </MonoLabel>
           </span>
-          <MonoLabel>{mobileOpen ? 'close' : 'trace'}</MonoLabel>
+          <MonoLabel>{mobileOpen ? 'close' : 'menu'}</MonoLabel>
         </button>
 
         <ol

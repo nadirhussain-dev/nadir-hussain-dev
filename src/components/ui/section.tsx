@@ -28,9 +28,12 @@ export function Section({
     <section
       id={span.id}
       aria-labelledby={headingId}
-      className={cn('scroll-mt-24 px-(--spacing-gutter) py-24 md:py-32', className)}
+      className={cn(
+        'scroll-mt-24 px-(--spacing-gutter) py-[30vh] lg:py-[34vh]',
+        className,
+      )}
     >
-      <div className="reveal mx-auto w-full max-w-6xl">
+      <div className="reveal studio-panel mx-auto w-full max-w-6xl">
         <header className={cn('mb-12 md:mb-16', !headingVisible && 'sr-only')}>
           <div className="mb-4 flex items-center gap-4">
             <MonoLabel tone="flow">{span.label}</MonoLabel>
