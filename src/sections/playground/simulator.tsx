@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSimulation } from '@/hooks/use-simulation';
 import type { FailureMode, SimConfig } from '@/lib/sim/types';
-import { BREAKER_EVENT } from '@/components/character/companion';
 import { MonoLabel } from '@/components/ui/mono-label';
 import { PipelineCanvas } from './pipeline-canvas';
 import { cn } from '@/lib/utils';
@@ -91,11 +90,6 @@ export function Simulator() {
   );
 
   const { snapshot, onFrame, reset, reducedMotion } = useSimulation(config, running);
-
-  // Lets the character react to a live failure without either knowing the other.
-  useEffect(() => {
-    window.dispatchEvent(new CustomEvent(BREAKER_EVENT, { detail: snapshot.breaker }));
-  }, [snapshot.breaker]);
 
   const settled = snapshot.succeeded + snapshot.failed;
   const successRate = settled === 0 ? 100 : (snapshot.succeeded / settled) * 100;

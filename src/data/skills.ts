@@ -167,7 +167,7 @@ export const SKILLS: readonly Skill[] = [
       'turborepo',
     ],
     proof: 'Multi-tenant, local-first and ledger-based designs, with reasons.',
-    href: '#systems',
+    href: '#work',
   },
   {
     id: 'multitenant',

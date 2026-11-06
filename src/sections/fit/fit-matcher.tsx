@@ -17,7 +17,7 @@ export function FitMatcher() {
     <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
       <div>
         <label htmlFor={inputId} className="mb-3 block">
-          <MonoLabel tone="flow">job description</MonoLabel>
+          <MonoLabel tone="flow">Job description</MonoLabel>
         </label>
         <textarea
           id={inputId}
@@ -31,7 +31,7 @@ export function FitMatcher() {
           <button
             type="button"
             onClick={() => setText(EXAMPLE)}
-            className="min-h-9 rounded-sm border border-rule bg-ink-850 px-3 font-mono text-meta text-paper-200 transition-colors duration-(--duration-quick) hover:border-rule-strong"
+            className="min-h-9 rounded-sm border border-rule bg-ink-850 px-3 text-meta font-bold text-paper-200 transition-colors duration-(--duration-quick) hover:border-rule-strong"
           >
             Try an example
           </button>
@@ -54,7 +54,7 @@ export function FitMatcher() {
         ) : (
           <>
             <div className="flex items-baseline gap-3">
-              <span className="font-mono text-h2 text-paper-100">
+              <span className="font-display text-h2 font-bold text-paper-100">
                 {result.coverage}%
               </span>
               <span className="text-meta text-paper-400">
@@ -82,7 +82,7 @@ export function FitMatcher() {
 
             {result.gaps.length > 0 && (
               <div className="mt-6">
-                <MonoLabel className="mb-2 block">no public proof yet</MonoLabel>
+                <MonoLabel className="mb-2 block">No public proof yet</MonoLabel>
                 <ul className="flex flex-wrap gap-1.5">
                   {result.gaps.map((gap) => (
                     <li

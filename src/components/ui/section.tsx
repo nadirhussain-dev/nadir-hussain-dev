@@ -1,50 +1,30 @@
 import type { Span } from '@/data/spans';
-import { MonoLabel } from '@/components/ui/mono-label';
-import { Hairline } from '@/components/ui/hairline';
 import { cn } from '@/lib/utils';
 
-/**
- * The shell every span renders into.
- *
- * Server Component: it is pure structure, so it costs nothing on the client.
- * Each section carries its span id as the anchor target and its label as
- * visible instrumentation, which is what ties the page body back to the rail.
- */
+/** One band of the page, with its own background set by the caller. */
 export function Section({
   span,
+  intro,
   children,
   className,
-  headingVisible = true,
 }: {
   span: Span;
+  intro?: string;
   children: React.ReactNode;
   className?: string;
-  /** Hero-like sections supply their own headline and hide the default one. */
-  headingVisible?: boolean;
 }) {
-  const headingId = `${span.id}-heading`;
-
   return (
     <section
       id={span.id}
-      aria-labelledby={headingId}
-      className={cn(
-        'scroll-mt-24 px-(--spacing-gutter) py-[30vh] lg:py-[34vh]',
-        className,
-      )}
+      aria-labelledby={`${span.id}-heading`}
+      className={cn('px-(--spacing-gutter) py-20 md:py-28', className)}
     >
-      <div className="reveal studio-panel mx-auto w-full max-w-6xl">
-        <header className={cn('mb-12 md:mb-16', !headingVisible && 'sr-only')}>
-          <div className="mb-4 flex items-center gap-4">
-            <MonoLabel tone="flow">{span.label}</MonoLabel>
-            <Hairline className="flex-1" />
-          </div>
-          <h2
-            id={headingId}
-            className="text-h2 font-semibold text-balance text-paper-100"
-          >
+      <div className="mx-auto w-full max-w-6xl">
+        <header className="mb-10 max-w-2xl md:mb-14">
+          <h2 id={`${span.id}-heading`} className="text-h2 font-bold text-balance">
             {span.heading}
           </h2>
+          {intro !== undefined && <p className="mt-4 text-lead text-pretty">{intro}</p>}
         </header>
         {children}
       </div>

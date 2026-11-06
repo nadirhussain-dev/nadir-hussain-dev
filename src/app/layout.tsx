@@ -1,11 +1,9 @@
 import type { Metadata, Viewport } from 'next';
-import { Instrument_Sans, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import { buildPersonJsonLd, rootMetadata } from '@/lib/seo/metadata';
 import { SkipLink } from '@/components/ui/skip-link';
-import { TraceRail } from '@/components/trace/trace-rail';
 import { SiteFooter } from '@/components/ui/site-footer';
-import { Companion } from '@/components/character/companion';
-import { StudioCanvas } from '@/components/studio/studio-canvas';
+import { SiteNav } from '@/components/nav/site-nav';
 import { Terminal } from '@/components/terminal/terminal';
 import { projects } from '@/data/projects';
 import { site } from '@/data/site';
@@ -13,31 +11,33 @@ import { getResumeStatus } from '@/lib/resume';
 import { isPublishable } from '@/types/project';
 import '@/styles/globals.css';
 
-/**
- * Instrument Sans over Inter: it carries slightly more character in the
- * terminals and a tighter aperture, which keeps large display sizes from
- * reading as generic. JetBrains Mono is used as a design element throughout —
- * metadata, labels, span ids — not only for code.
- */
-const instrumentSans = Instrument_Sans({
-  subsets: ['latin'],
-  variable: '--font-instrument-sans',
+/** Self-hosted, so the page never waits on a third-party font server. */
+const title = localFont({
+  src: '../fonts/bricolage-grotesque-latin-wght-normal.woff2',
+  weight: '200 800',
+  variable: '--font-title',
   display: 'swap',
-  adjustFontFallback: true,
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
+const body = localFont({
+  src: '../fonts/plus-jakarta-sans-latin-wght-normal.woff2',
+  weight: '200 800',
+  variable: '--font-body',
   display: 'swap',
-  adjustFontFallback: true,
+});
+
+const code = localFont({
+  src: '../fonts/jetbrains-mono-latin-wght-normal.woff2',
+  weight: '100 800',
+  variable: '--font-code',
+  display: 'swap',
 });
 
 export const metadata: Metadata = rootMetadata;
 
 export const viewport: Viewport = {
-  themeColor: '#0a0c24',
-  colorScheme: 'dark',
+  themeColor: '#41519e',
+  colorScheme: 'light',
 };
 
 export default function RootLayout({
@@ -46,8 +46,8 @@ export default function RootLayout({
   const resume = getResumeStatus();
 
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${jetbrainsMono.variable}`}>
-      <body className="grain">
+    <html lang="en" className={`${title.variable} ${body.variable} ${code.variable}`}>
+      <body>
         {/* Structured data is read by machines that cannot tell a placeholder
             from a fact, so it emits only verified claims. */}
         <script
@@ -56,16 +56,10 @@ export default function RootLayout({
           // input, so there is no injection surface here.
           dangerouslySetInnerHTML={{ __html: buildPersonJsonLd() }}
         />
-        <StudioCanvas />
         <SkipLink />
-        <TraceRail />
-        {/* Clears the fixed mobile bar. The desktop rail sits beside the
-            content rather than above it, so the offset is mobile-only. */}
-        <main className="pt-(--spacing-mobile-bar) xl:pt-0">{children}</main>
-        <div className="xl:pl-(--spacing-rail)">
-          <SiteFooter />
-        </div>
-        <Companion />
+        <SiteNav />
+        <main>{children}</main>
+        <SiteFooter />
         <Terminal
           context={{
             projects: projects

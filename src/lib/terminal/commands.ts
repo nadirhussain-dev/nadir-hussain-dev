@@ -33,7 +33,7 @@ export const HELP = [
   'cv              open my CV',
   'contact         how to reach me',
   'fit             check me against your role',
-  'break           go and break the payment simulator',
+  'break           break the payment simulator',
   'clear           clear the screen',
   'exit            close the terminal',
 ];

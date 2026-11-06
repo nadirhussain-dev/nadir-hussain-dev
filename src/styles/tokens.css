@@ -1,50 +1,50 @@
 /**
  * Design tokens.
  *
- * Taken from the studio in Nadir's character art: deep indigo walls, a cold
- * neon sign and warm shelf light.
+ * Every colour is sampled from Nadir's character art: the indigo wall, the
+ * periwinkle screen glow, the blush desk, the lamp light and the black hoodie.
  *
- * Each accent keeps one job. `signal` is the neon: live, active, "you are
- * here". `flow` is violet: labels and data in motion. Amber is reserved for
- * warnings, because in that room it only ever comes from the shelf lamps.
+ * The ink and paper ramps below are the dark surfaces (the lab and terminal).
+ * `.light` in globals.css flips them for sections on a bright background.
  */
 @theme {
-  /* --- Warm graphite ramp --------------------------------------------- */
-  --color-ink-950: #06071a;
-  --color-ink-900: #0a0c24;
-  --color-ink-850: #10132f;
-  --color-ink-800: #171a3b;
-  --color-ink-700: #22264d;
-  --color-ink-600: #31366a;
-  --color-ink-500: #4b5190;
+  --color-wall: #41519e;
+  --color-screen: #5c86fc;
+  --color-desk: #efc6bb;
+  --color-lamp: #ffc27a;
+  --color-mist: #f4f2ff;
+  --color-hoodie: #171214;
 
-  --color-paper-100: #f4f6ff;
-  --color-paper-200: #dfe4fb;
-  --color-paper-300: #bcc4ea;
-  --color-paper-400: #a3acd6;
-  --color-paper-500: #8f98c8;
+  --color-ink-950: #120e10;
+  --color-ink-900: #171214;
+  --color-ink-850: #211b1e;
+  --color-ink-800: #2a2327;
+  --color-ink-700: #3a3136;
+  --color-ink-600: #4c4247;
+  --color-ink-500: #685c63;
 
-  /* --- Accents: one job each ------------------------------------------ */
-  /* Live / active / "you are here". Never decoration. */
-  --color-signal: #7fdcff;
-  --color-signal-dim: #2f7ea6;
-  /* Data in motion: trace lines, request flow, edges. Never text. */
-  --color-flow: #b29bff;
-  --color-flow-dim: #5a4bb0;
+  --color-paper-100: #ffffff;
+  --color-paper-200: #f1edf2;
+  --color-paper-300: #d9d3dc;
+  --color-paper-400: #bdb5c2;
+  --color-paper-500: #a79fad;
 
-  /* --- Status: reserved for the simulator, where it encodes state ------ */
-  --color-status-ok: #5eead4;
-  --color-status-warn: #ffb36b;
-  --color-status-fail: #ff5f6d;
+  --color-signal: #ffc27a;
+  --color-signal-dim: #9a6a33;
+  --color-flow: #8fb0ff;
+  --color-flow-dim: #4a62b5;
 
-  /* --- Structure ------------------------------------------------------- */
-  /* Hairlines that read as a technical drawing sheet, not as borders. */
-  --color-rule: oklch(from var(--color-paper-100) l c h / 0.1);
-  --color-rule-strong: oklch(from var(--color-paper-100) l c h / 0.2);
+  --color-status-ok: #6fe3c1;
+  --color-status-warn: #ffc27a;
+  --color-status-fail: #ff6b78;
+
+  --color-rule: oklch(from var(--color-paper-100) l c h / 0.14);
+  --color-rule-strong: oklch(from var(--color-paper-100) l c h / 0.28);
 
   /* --- Type ------------------------------------------------------------ */
-  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, 'SF Mono', monospace;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-title), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-code), ui-monospace, 'SF Mono', monospace;
 
   /* Fluid scale. Clamp bounds are set so nothing needs a breakpoint to
      stay readable between 320px and 1920px. */
@@ -52,9 +52,9 @@
   --text-micro--line-height: 1.45;
   --text-micro--letter-spacing: 0.08em;
 
-  --text-meta: 0.75rem;
+  --text-meta: 0.875rem;
   --text-meta--line-height: 1.5;
-  --text-meta--letter-spacing: 0.04em;
+  --text-meta--letter-spacing: 0;
 
   --text-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
   --text-body--line-height: 1.65;
@@ -66,12 +66,12 @@
   --text-h3--line-height: 1.25;
   --text-h3--letter-spacing: -0.01em;
 
-  --text-h2: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
-  --text-h2--line-height: 1.1;
+  --text-h2: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+  --text-h2--line-height: 1;
   --text-h2--letter-spacing: -0.02em;
 
-  --text-h1: clamp(2.5rem, 1.6rem + 4.2vw, 5.5rem);
-  --text-h1--line-height: 0.98;
+  --text-h1: clamp(3.5rem, 2.4rem + 4.8vw, 6.5rem);
+  --text-h1--line-height: 0.9;
   --text-h1--letter-spacing: -0.035em;
 
   /* --- Motion ---------------------------------------------------------- */
@@ -88,8 +88,4 @@
 
   /* --- Layout ---------------------------------------------------------- */
   --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
-  --spacing-rail: 13rem;
-  /* The fixed mobile trace bar. Both the bar and the padding that clears it
-     read this, so they cannot drift apart. */
-  --spacing-mobile-bar: 3rem;
 }

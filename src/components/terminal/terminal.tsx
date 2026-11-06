@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { runCommand, type TerminalContext } from '@/lib/terminal/commands';
-import { TERMINAL_EVENT } from './terminal-button';
+import { TERMINAL_EVENT } from './events';
 
 interface Row {
   id: number;

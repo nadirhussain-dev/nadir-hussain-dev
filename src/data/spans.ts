@@ -1,51 +1,23 @@
 /**
- * The tour.
- *
- * Each section is a stop in the 3D studio. This registry is the single source of
- * truth for section identity, order and depth — the navigation rail, the
- * scroll observer, the skip links and the sitemap all derive from it, so
- * section order can never drift between them.
+ * The page, in order. Navigation and the sitemap derive from this list, and
+ * `app/page.tsx` must supply a section for every id.
  */
 export type SpanId =
-  | 'identity'
-  | 'systems'
-  | 'work'
-  | 'fit'
-  | 'timeline'
-  | 'stack'
-  | 'playground'
-  | 'contact';
+  'identity' | 'work' | 'timeline' | 'stack' | 'fit' | 'playground' | 'contact';
 
 export interface Span {
   id: SpanId;
-  /** Rendered in the navigation. */
+  /** Short name for the navigation. */
   label: string;
-  /** Human heading for the section itself. */
   heading: string;
-  /**
-   * Nesting depth in the trace. Root spans sit flush; child spans indent,
-   * the way a real span waterfall shows causal nesting.
-   */
-  depth: 0 | 1;
 }
 
 export const SPANS: readonly Span[] = [
-  { id: 'identity', label: 'Home', heading: 'Identity', depth: 0 },
-  {
-    id: 'systems',
-    label: 'Approach',
-    heading: 'How I think about systems',
-    depth: 0,
-  },
-  { id: 'work', label: 'Work', heading: 'Selected work', depth: 1 },
-  { id: 'fit', label: 'Role match', heading: 'Check me against your role', depth: 1 },
-  { id: 'timeline', label: 'Journey', heading: 'Trajectory', depth: 1 },
-  { id: 'stack', label: 'Stack', heading: 'Stack, by layer', depth: 0 },
-  {
-    id: 'playground',
-    label: 'Lab',
-    heading: 'Resilience simulator',
-    depth: 0,
-  },
-  { id: 'contact', label: 'Contact', heading: 'Get in touch', depth: 0 },
+  { id: 'identity', label: 'Home', heading: 'Nadir Hussain' },
+  { id: 'work', label: 'Work', heading: 'Things I’ve built' },
+  { id: 'timeline', label: 'About', heading: 'Three years of shipping' },
+  { id: 'stack', label: 'Stack', heading: 'What’s on the shelf' },
+  { id: 'fit', label: 'Role match', heading: 'Hiring? Paste your job description' },
+  { id: 'playground', label: 'Lab', heading: 'Break my payment system' },
+  { id: 'contact', label: 'Contact', heading: 'Let’s build something' },
 ] as const;

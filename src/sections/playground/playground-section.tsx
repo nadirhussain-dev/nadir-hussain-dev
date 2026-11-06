@@ -1,18 +1,24 @@
+import Image from 'next/image';
 import type { Span } from '@/data/spans';
-import { playgroundIntro, playgroundNote } from '@/data/playground';
 import { Section } from '@/components/ui/section';
 import { Simulator } from './simulator';
 
 export function PlaygroundSection({ span }: { span: Span }) {
   return (
-    <Section span={span}>
-      <p className="mb-10 max-w-2xl text-lead text-pretty text-paper-300">
-        {playgroundIntro.value}
-      </p>
-      <Simulator />
-      <p className="mt-10 max-w-2xl border-t border-rule pt-5 text-meta text-pretty text-paper-500">
-        {playgroundNote.value}
-      </p>
-    </Section>
+    <div className="relative bg-hoodie text-white">
+      <Image
+        src="/art/robot.webp"
+        alt=""
+        width={546}
+        height={660}
+        className="absolute top-8 right-(--spacing-gutter) hidden w-32 rounded-2xl md:block"
+      />
+      <Section
+        span={span}
+        intro="A working simulation of a payment system. Turn up the traffic, make the processor fail, and watch it protect customers from double charges."
+      >
+        <Simulator />
+      </Section>
+    </div>
   );
 }
